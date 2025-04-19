@@ -1,0 +1,135 @@
+{% extends 'base.html' %} {% block head %}
+<title>Home</title>
+{% endblock %} {% block content %}
+<section id="hero">
+  <!-- Navigation bar -->
+  <nav>
+    <ul>
+      <li>
+        <a href="/"
+          ><img
+            class="logo"
+            src="{{ url_for('static', filename='images/logo.svg') }}"
+            alt="Home/logo"
+        /></a>
+      </li>
+      <div class="nav-links">
+        <ul>
+          <li><a href="">Recent</a></li>
+          <li><a href="">Categories</a></li>
+          <li><a href="">Contact</a></li>
+          <li>
+            <a href=""
+              ><img
+                class="mode"
+                src="{{ url_for('static', filename='images/dark.svg') }}"
+                alt="mode"
+            /></a>
+          </li>
+        </ul>
+      </div>
+    </ul>
+  </nav>
+  <p class="search-description">Enter your clinical query.</p>
+  <div class="search">
+    <form action="/search" method="GET" class="search-form">
+      <div class="search-container">
+        <input
+          type="text"
+          name="query"
+          placeholder="Search..."
+          class="search-input"
+          id="search-input"
+        />
+        <img
+          src="{{ url_for('static', filename='images/search.svg') }}"
+          alt="Search"
+          class="search-icon"
+        />
+      </div>
+    </form>
+  </div>
+</section>
+<section id="About">
+  <!-- About app -->
+  <div class="about-image">
+    <img
+      class="nurse-illustration"
+      src="{{ url_for('static', filename='images/Nurse.png') }}"
+      alt="nurse-illustration"
+    />
+  </div>
+  <div class="about-text">
+    <h2>Nursing Calculations made simple.</h2>
+    <p>
+      CLNICALC is a cutting-edge web tool designed to streamline nursing
+      informatics calculations. By simply entering patient data, nursing
+      professionals can instantly access accurate, actionable insights that
+      enhance decision-making and improve patient care. CLNICALC makes complex
+      calculations simple, enabling nurses to deliver precise, evidence-based
+      care with confidence.
+    </p>
+    <a href="" class="get-started">Get Started!</a>
+  </div>
+</section>
+<section id="Categories">
+  <h2 class="Categories-header">Categories</h2>
+  <div class="grid-container">
+    {% for card in cards %}
+    <div
+      class="card"
+      data-slug="{{ card.slug }}"
+      onclick="redirectToDetailPage(this)"
+    >
+      <img
+        src="{{ url_for('static', filename='images/' + card.slug + '.svg') }}"
+        alt="{{ card.title }}"
+      />
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <p>Email: contact@clinicalc.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+    <div class="footer-section">
+      <h4>Authors</h4>
+      <p>Mariam Siyanbola.</p>
+      <p>Eniola Oladejo.</p>
+    </div>
+    <div class="footer-section">
+      <h4>About</h4>
+      <p>CLNICALC is a tool for nursing informatics calculations.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <p><a href="#">Twitter</a></p>
+      <p><a href="#">Facebook</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      &copy; <span id="current-year">2025</span> CLNICALC. All rights reserved.
+    </p>
+  </div>
+</footer>
+<script>
+  function redirectToDetailPage(element) {
+    const slug = element.getAttribute('data-slug');
+    window.location.href = `/card/${slug}`;
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const yearSpan = document.getElementById('current-year');
+    const currentYear = new Date().getFullYear();
+    yearSpan.textContent = currentYear;
+  });
+</script>
+{% endblock %}

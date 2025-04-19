@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block head %}
+<title>{{ card.title }}</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/slug.css') }}"
+/>
+{% endblock %} {% block content %}
+<!-- Navigation bar -->
+<nav class="nav-bar">
+  <ul>
+    <li>
+      <a href="/"
+        ><img
+          class="logo"
+          src="{{ url_for('static', filename='images/logo.svg') }}"
+          alt="Home/logo"
+      /></a>
+    </li>
+    <div class="nav-links">
+      <ul>
+        <li><a href="">Recent</a></li>
+        <li><a href="">Categories</a></li>
+        <li><a href="">Contact</a></li>
+        <li>
+          <a href=""
+            ><img
+              class="mode"
+              src="{{ url_for('static', filename='images/dark.svg') }}"
+              alt="mode"
+          /></a>
+        </li>
+      </ul>
+    </div>
+  </ul>
+</nav>
+<section id="card-detail">
+  <h2>{{ card.title }}</h2>
+  <p>{{ card.description }}</p>
+  <h3>Calculations under this category</h3>
+  <div class="calculation-cards">
+    {% for calculation in card.calculations %}
+    <div
+      class="card calculation-card"
+      data-bs-toggle="modal"
+      data-bs-target="#calculationModal-{{ loop.index }}"
+    >
+      <div class="card-body">
+        <div>
+          <h5 class="card-title">{{ calculation.name }}</h5>
+          <p class="card-text">{{ calculation.description }}</p>
+        </div>
+        <p class="card-unit">Unit: {{ calculation.result_unit }}</p>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+</section>
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <p>CLNICALC is a tool for nursing informatics calculations.</p>
+      <p>All calculations should be confirmed by healthcare professionals.</p>
+      <p>This tool does not provide medical advice.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      &copy; <span id="current-year">2025</span> CLNICALC. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const forms = document.querySelectorAll('form');
+    forms.forEach((form) => {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const resultDiv = document.getElementById(
+              'result-' + form.id.split('-')[1]
+            );
+            resultDiv.textContent = 'Result: ' + data.result;
+          })
+          .catch((error) => console.error('Error:', error));
+      });
+    });
+  });
+</script>
+{% endblock %}
