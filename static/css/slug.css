@@ -4,10 +4,12 @@
   margin: 0;
   padding: 0;
 }
+
 img {
   display: block;
   overflow: hidden;
 }
+
 button {
   background-color: rgba(0, 0, 0, 0);
   background-repeat: no-repeat;
@@ -16,6 +18,9 @@ button {
 
 a {
   text-decoration: none;
+  color: #64748b;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 ul {
@@ -28,6 +33,13 @@ ul {
   align-items: center;
 }
 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #64748b;
+  background-color: #f8fafc;
+  line-height: 1.6;
+}
+
 .nav-bar {
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,81 +48,301 @@ ul {
   padding-top: 0;
   padding-left: 1em;
   padding-right: 5em;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  width: 20em;
 }
 
 .nav-links {
   width: 40%;
 }
+
 .mode {
   width: 1.1rem;
 }
-section {
-  background-color: #f8fafc;
-  padding-left: 2em;
-  padding-right: 2em;
-}
-body {
-  font-family: 'Roboto', sans-serif;
-  /* background-color: #f8fafc; */
-}
-
-a {
-  text-decoration: none;
-}
 
 #card-detail {
-  padding-top: 3rem;
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-h2 {
-  font-size: 2rem;
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
 }
 
+.page-header h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: center;
+  margin: 3rem 0 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+h3::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #1d4ed8;
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+/* Calculation Cards Grid */
 .calculation-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-  gap: 2rem; /* Space between cards */
-  margin-top: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+  /* padding: 0 1rem; */
 }
 
 .calculation-card {
   background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  width: 20rem;
-  height: 15rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: #1d4ed8;
+}
+
+.calculation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.calculation-card:hover::before {
+  opacity: 1;
 }
 
 .card-body {
-  padding: 1rem;
-  text-align: center;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1;
+}
+
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
 }
 
 .card-text {
   font-size: 1rem;
-  color: #6c757d;
+  color: #64748b;
+  line-height: 1.6;
+  flex-grow: 1; /* Allows text to expand and push footer down */
+}
+
+.card-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  flex-shrink: 0; /* Prevents footer from shrinking */
+  align-self: flex-end;
+  width: 100%;
 }
 
 .card-unit {
   font-size: 0.9rem;
-  color: #495057;
+  color: #1d4ed8;
+  font-weight: 500;
+  background-color: #eff6ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
 }
 
-h3 {
-  margin-top: 2rem;
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #1d4ed8;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  transition: all 0.3s ease;
+  margin-top: 3rem;
+}
+
+.back-button:hover {
+  background-color: #1e40af;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.back-button::before {
+  content: '←';
+  font-size: 1.1rem;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 2rem 0;
   text-align: center;
-  text-transform: uppercase;
+  margin-top: 4rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 1rem;
+}
+
+.footer-section p {
+  margin: 0.5rem 0;
+  color: #cbd5e1;
+}
+
+.footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: #9ca3af;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #card-detail {
+    padding: 2rem 1rem;
+  }
+
+  .page-header h2 {
+    font-size: 2rem;
+  }
+
+  .calculation-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0;
+  }
+
+  .calculation-card {
+    height: 320px; /* Slightly taller for mobile to accommodate content */
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .nav-bar {
+    padding-right: 2em;
+  }
+
+  .logo {
+    width: 15em;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .nav-bar {
+    padding-left: 0.5em;
+    padding-right: 1em;
+  }
+
+  .logo {
+    width: 12em;
+  }
+}
+
+.calculation-cards {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, jsonify
 import json
 import os
 import calculations
+from livereload import Server
 
 app = Flask(__name__) 
 
@@ -38,13 +39,16 @@ def card_detail(slug):
     if card is None:
         return "Card not found", 404
     if request.method == 'POST':
-        calculation_name = request.form['calculation_name']
-        calculation = next((calc for calc in card['calculations'] if calc['name'] == calculation_name), None)
-        if calculation:
-            result = execute_function(calculation['function'], calculation['parameters'])
-            return jsonify(result=result)
+        form_id = request.form.get('form_id')
+        if form_id:
+            index = int(form_id.split('-')[1]) - 1
+            if 0 <= index < len(card['calculations']):
+                calculation = card['calculations'][index]
+                result = execute_function(calculation['function'], calculation['parameters'])
+                return jsonify(result=result)
 
     return render_template('card_detail.html', card=card)
    
 if __name__ == '__main__':
-    app.run(debug=True)
+    server = Server(app.wsgi_app)
+    server.serve()
