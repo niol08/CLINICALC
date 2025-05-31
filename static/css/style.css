@@ -34,12 +34,12 @@ a {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #64748b;
-  overflow: -moz-scrollbars-none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
 }
 
 body::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
+  display: none;
 }
 
 #hero {
@@ -48,13 +48,9 @@ body::-webkit-scrollbar {
   height: 50vh;
   background-position: center;
   background-repeat: no-repeat;
-  /* padding: 2em 0; */
-  /* color: #ffffff; */
 }
 
 nav {
-  /* background-color: #ffffff; */
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   width: 100%;
   height: 4rem;
   padding-top: 1em;
@@ -63,11 +59,12 @@ nav {
 }
 
 .search-description {
-  font-size: 1.5em;
-  font-weight: bolder;
+  font-size: 1.3em;
+  font-weight: bold;
   text-align: center;
   color: #1e293b;
   margin-top: 3em;
+  text-transform: uppercase;
 }
 
 .search-form {
@@ -83,7 +80,7 @@ nav {
 .search-input {
   padding: 0.7em 0.7em 0.7em 0.7em;
   border: 1px solid #ccc;
-  border-radius: 1em;
+  border-radius: 2em;
   outline: none;
   width: 100%;
   height: 4em;
@@ -96,7 +93,6 @@ nav {
   transform: translateY(-50%);
   width: 1em;
   height: 1em;
-  /* pointer-events: none; */
   cursor: pointer;
 }
 .nav-links {
@@ -111,11 +107,9 @@ section {
 #About {
   display: flex;
   justify-content: space-around;
-  /* gap: 5rem; */
   align-items: center;
   padding-left: 5%;
   padding-right: 5%;
-  /* border-bottom: 2px solid #ccc; */
   padding-bottom: 2em;
 }
 .search {
@@ -131,10 +125,11 @@ section {
   padding: 1rem;
 }
 .about-text h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #1e293b;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 .about-image {
   width: 30%;
@@ -170,7 +165,6 @@ section {
 .card {
   padding: 1em;
   text-align: center;
-  /* cursor: pointer; */
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
@@ -180,7 +174,7 @@ section {
   transition: all 0.3s ease;
   overflow: hidden;
   position: relative;
-  height: 300px;
+  height: 18rem;
   display: flex;
   flex-direction: column;
 }
@@ -208,7 +202,7 @@ section {
   opacity: 1;
 }
 
-.card img {
+#card-image {
   width: 3em;
   height: 3em;
   margin-left: auto;
@@ -217,7 +211,9 @@ section {
 
 .card h3 {
   margin: 0.5em 0;
+  font-size: 1.2rem;
   font-weight: bold;
+  color: #1e293b;
 }
 
 .card p {
@@ -253,9 +249,11 @@ footer {
 }
 
 .footer-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em;
+  justify-items: center;
+  align-items: center;
   margin-bottom: 1em;
 }
 
@@ -282,7 +280,6 @@ footer {
   margin: 0;
 }
 
-/* Modal Styles */
 .modal-content {
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -336,4 +333,86 @@ footer {
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+#live-search-results {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  max-height: 350px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 0.5rem;
+  border-radius: 2rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+}
+#live-search-results ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 3rem;
+  margin: 0;
+}
+#live-search-results li {
+  width: 100%;
+  padding: 0.5em 1em;
+  border-bottom: 1px solid #eee;
+}
+#live-search-results li:last-child {
+  border-bottom: none;
+}
+#live-search-results a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+#live-search-results a:hover {
+  color: #1d4ed8;
+}
+
+#search-results {
+  padding: 0 8rem;
+}
+
+#recentModal .modal-body {
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.max-width {
+  max-width: 25rem !important;
+}
+
+.explanation {
+  display: none;
+  background: #f1f5fd;
+  border-left: 4px solid #1d4ed8;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  color: #1e293b;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+  max-width: 600px;
+  margin: 0.5rem auto 0 auto;
 }

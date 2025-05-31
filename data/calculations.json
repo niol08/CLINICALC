@@ -15,13 +15,13 @@
               "name": "dosePerKg",
               "description": "Prescribed dose per kilogram of body weight",
               "unit": "varies (mg/kg, mcg/kg, units/kg, etc.)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -35,13 +35,13 @@
               "name": "volume",
               "description": "Total volume to be infused",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "time",
               "description": "Duration of infusion",
               "unit": "hr",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -55,19 +55,19 @@
               "name": "volume",
               "description": "Total volume to be infused",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "dropFactor",
               "description": "Number of drops per mL (varies by IV set type)",
               "unit": "gtt/mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "time",
               "description": "Duration of infusion",
               "unit": "min",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -81,19 +81,19 @@
               "name": "desiredDose",
               "description": "Dose of medication ordered by the physician",
               "unit": "varies (mg, mcg, units, etc.)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "volume",
               "description": "Volume of medication solution",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "stockStrength",
               "description": "Concentration of the medication in stock",
               "unit": "varies (mg/mL, mcg/mL, units/mL, etc.)",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -107,19 +107,19 @@
               "name": "currentGlucose",
               "description": "Current blood glucose reading",
               "unit": "mg/dL or mmol/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "targetGlucose",
               "description": "Target blood glucose level",
               "unit": "mg/dL or mmol/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "correctionFactor",
               "description": "How much 1 unit of insulin will lower blood glucose",
               "unit": "mg/dL/unit or mmol/L/unit",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -133,13 +133,13 @@
               "name": "age",
               "description": "Child's age",
               "unit": "years",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "adultDose",
               "description": "Standard adult dose",
               "unit": "varies (mg, mL, mcg, etc.)",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -153,13 +153,13 @@
               "name": "weight",
               "description": "Child's weight",
               "unit": "lb",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "adultDose",
               "description": "Standard adult dose",
               "unit": "varies (mg, mL, mcg, etc.)",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -173,26 +173,26 @@
               "name": "age",
               "description": "Patient's age",
               "unit": "years",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "serumCreatinine",
               "description": "Serum creatinine level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             }
           ]
         },
@@ -206,13 +206,13 @@
               "name": "unitsPerHour",
               "description": "Heparin units per hour ordered",
               "unit": "units/hr",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "concentration",
               "description": "Concentration of heparin solution",
               "unit": "units/mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -226,7 +226,7 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -240,35 +240,35 @@
               "name": "appearance",
               "description": "Color assessment",
               "unit": "score (0-2)",
-              "type": "number",
+              "type": "float",
               "enum": [0, 1, 2]
             },
             {
               "name": "pulse",
               "description": "Heart rate assessment",
               "unit": "score (0-2)",
-              "type": "number",
+              "type": "float",
               "enum": [0, 1, 2]
             },
             {
               "name": "grimace",
               "description": "Reflex irritability assessment",
               "unit": "score (0-2)",
-              "type": "number",
+              "type": "float",
               "enum": [0, 1, 2]
             },
             {
               "name": "activity",
               "description": "Muscle tone assessment",
               "unit": "score (0-2)",
-              "type": "number",
+              "type": "float",
               "enum": [0, 1, 2]
             },
             {
               "name": "respiration",
               "description": "Respiratory effort assessment",
               "unit": "score (0-2)",
-              "type": "number",
+              "type": "float",
               "enum": [0, 1, 2]
             }
           ]
@@ -283,13 +283,13 @@
               "name": "fiO2",
               "description": "Desired fraction of inspired oxygen",
               "unit": "% (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "minuteVentilation",
               "description": "Volume of air breathed per minute",
               "unit": "L/min",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -303,25 +303,25 @@
               "name": "sodium",
               "description": "Sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "potassium",
               "description": "Potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "chloride",
               "description": "Chloride level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bicarbonate",
               "description": "Bicarbonate level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -342,31 +342,31 @@
               "name": "respiratoryRate",
               "description": "Patient's respiratory rate",
               "unit": "breaths/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "oxygenSaturation",
               "description": "Patient's oxygen saturation level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "temperature",
               "description": "Patient's body temperature",
               "unit": "°C",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "systolicBP",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "heartRate",
               "description": "Patient's heart rate",
               "unit": "beats/min",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -380,13 +380,13 @@
               "name": "respiratoryRate",
               "description": "Patient's respiratory rate",
               "unit": "breaths/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "tidalVolume",
               "description": "Volume of air displaced during normal inhalation and exhalation",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -400,13 +400,13 @@
               "name": "heartRate",
               "description": "Patient's heart rate",
               "unit": "beats/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "systolicBP",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -420,21 +420,21 @@
               "name": "eyeResponse",
               "description": "Score for eye-opening response",
               "unit": "score (1-4)",
-              "type": "number",
+              "type": "float",
               "enum": [1, 2, 3, 4]
             },
             {
               "name": "verbalResponse",
               "description": "Score for verbal response",
               "unit": "score (1-5)",
-              "type": "number",
+              "type": "float",
               "enum": [1, 2, 3, 4, 5]
             },
             {
               "name": "motorResponse",
               "description": "Score for motor response",
               "unit": "score (1-6)",
-              "type": "number",
+              "type": "float",
               "enum": [1, 2, 3, 4, 5, 6]
             }
           ]
@@ -449,13 +449,13 @@
               "name": "systolicBP",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "diastolicBP",
               "description": "Diastolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -469,13 +469,13 @@
               "name": "systolic",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "diastolic",
               "description": "Diastolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -489,19 +489,19 @@
               "name": "fiO2",
               "description": "Fraction of inspired oxygen",
               "unit": "% (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "meanAirwayPressure",
               "description": "Mean airway pressure",
               "unit": "cmH2O",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "paO2",
               "description": "Arterial oxygen partial pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -513,22 +513,82 @@
       "description": "Assess nutritional needs and manage fluid balance. Calculate BMI, caloric requirements, tube feeding rates, and fluid replacement. Supports comprehensive nutritional care planning and hydration management.",
       "calculations": [
         {
-          "name": "Daily Caloric Needs",
-          "description": "Calculates the daily caloric needs based on weight, height, age, and activity level.",
-          "formula": "Calories (kcal/day) = BMR × Activity Factor",
+          "name": "Caloric Requirements (Harris-Benedict Equation)",
+          "description": "Calculates daily caloric needs based on basal metabolic rate (BMR) using the Harris-Benedict equation and activity level.",
+          "formula": "Calories = BMR × Activity Factor, where BMR = 88.362 + (13.397 × Weight in kg) + (4.799 × Height in cm) - (5.677 × Age in years) for males, and BMR = 447.593 + (9.247 × Weight in kg) + (3.098 × Height in cm) - (4.330 × Age in years) for females.",
           "result_unit": "kcal/day",
           "parameters": [
             {
-              "name": "bmr",
-              "description": "Basal metabolic rate",
-              "unit": "kcal/day",
-              "type": "number"
+              "name": "weight",
+              "description": "Patient's weight",
+              "unit": "kg",
+              "type": "float"
+            },
+            {
+              "name": "height",
+              "description": "Patient's height",
+              "unit": "cm",
+              "type": "float"
+            },
+            {
+              "name": "age",
+              "description": "Patient's age",
+              "unit": "years",
+              "type": "integer"
+            },
+            {
+              "name": "sex",
+              "description": "Patient's biological sex (true for male, false for female)",
+              "unit": "N/A",
+              "type": "string",
+              "options": ["Male", "Female"]
             },
             {
               "name": "activityFactor",
-              "description": "Activity level multiplier",
+              "description": "Activity level multiplier (1.2 = sedentary, 1.375 = lightly active, 1.55 = moderately active, 1.725 = very active, 1.9 = extremely active)",
+              "unit": "unitless",
+              "type": "float",
+              "enum": [1.2, 1.375, 1.55, 1.725, 1.9]
+            }
+          ]
+        },
+        {
+          "name": "Caloric Requirements (Mifflin-St Jeor Equation)",
+          "description": "Calculates daily caloric needs based on basal metabolic rate (BMR) using the Mifflin-St Jeor equation and activity level.",
+          "formula": "Calories = BMR × Activity Factor, where BMR = (10 × Weight in kg) + (6.25 × Height in cm) - (5 × Age in years) + 5 for males, and BMR = (10 × Weight in kg) + (6.25 × Height in cm) - (5 × Age in years) - 161 for females.",
+          "result_unit": "kcal/day",
+          "parameters": [
+            {
+              "name": "weight",
+              "description": "Patient's weight",
+              "unit": "kg",
+              "type": "float"
+            },
+            {
+              "name": "height",
+              "description": "Patient's height",
+              "unit": "cm",
+              "type": "float"
+            },
+            {
+              "name": "age",
+              "description": "Patient's age",
+              "unit": "years",
+              "type": "integer"
+            },
+            {
+              "name": "sex",
+              "description": "Patient's biological sex (true for male, false for female)",
               "unit": "N/A",
-              "type": "number"
+              "type": "string",
+              "options": ["Male", "Female"]
+            },
+            {
+              "name": "activityFactor",
+              "description": "Activity level multiplier (1.2 = sedentary, 1.375 = lightly active, 1.55 = moderately active, 1.725 = very active, 1.9 = extremely active)",
+              "unit": "unitless",
+              "type": "float",
+              "enum": [1.2, 1.375, 1.55, 1.725, 1.9]
             }
           ]
         },
@@ -542,7 +602,7 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -556,13 +616,13 @@
               "name": "caloricNeeds",
               "description": "Total daily caloric needs",
               "unit": "kcal",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "formulaCaloricDensity",
               "description": "Caloric density of the enteral formula",
               "unit": "kcal/mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -576,13 +636,13 @@
               "name": "totalCalories",
               "description": "Total daily caloric intake",
               "unit": "kcal",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "macronutrientPercentage",
               "description": "Percentage of calories from the macronutrient",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -596,13 +656,13 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "requirementFactor",
               "description": "Electrolyte requirement factor (varies by electrolyte)",
               "unit": "mEq/kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -616,36 +676,17 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "height",
               "description": "Patient's height",
               "unit": "m",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
-        {
-          "name": "Caloric Requirements (Harris-Benedict Equation)",
-          "description": "Calculates daily caloric needs based on basal metabolic rate (BMR) and activity level.",
-          "formula": "Calories = BMR × Activity Factor",
-          "result_unit": "kcal/day",
-          "parameters": [
-            {
-              "name": "bmr",
-              "description": "Basal metabolic rate",
-              "unit": "kcal/day",
-              "type": "number"
-            },
-            {
-              "name": "activityFactor",
-              "description": "Activity level multiplier",
-              "unit": "N/A",
-              "type": "number"
-            }
-          ]
-        },
+
         {
           "name": "Tube Feeding Rate",
           "description": "Calculates the required rate for enteral feeding.",
@@ -656,13 +697,13 @@
               "name": "totalVolume",
               "description": "Total volume of feeding solution",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "feedingDuration",
               "description": "Duration of feeding",
               "unit": "hr",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -676,13 +717,13 @@
               "name": "deficit",
               "description": "Fluid deficit",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "maintenance",
               "description": "Maintenance fluid requirement",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -696,13 +737,13 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "proteinFactor",
               "description": "Protein requirement per kg of body weight",
               "unit": "g/kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -716,7 +757,7 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -737,13 +778,13 @@
               "name": "volumeOfDistribution",
               "description": "Volume of distribution of the drug",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "clearance",
               "description": "Clearance rate of the drug",
               "unit": "L/time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -757,19 +798,19 @@
               "name": "dose",
               "description": "Administered dose of the drug",
               "unit": "mg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "auc",
               "description": "Area under the plasma concentration-time curve",
               "unit": "mg·time/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -783,13 +824,13 @@
               "name": "dose",
               "description": "Administered dose of the drug",
               "unit": "mg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "plasmaConcentration",
               "description": "Plasma concentration of the drug",
               "unit": "mg/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -803,19 +844,19 @@
               "name": "targetConcentration",
               "description": "Desired plasma concentration of the drug",
               "unit": "mg/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "volumeOfDistribution",
               "description": "Volume of distribution of the drug",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -829,19 +870,19 @@
               "name": "clearance",
               "description": "Clearance rate of the drug",
               "unit": "L/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "targetConcentration",
               "description": "Desired plasma concentration of the drug",
               "unit": "mg/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -855,19 +896,19 @@
               "name": "doseRate",
               "description": "Rate of drug administration",
               "unit": "mg/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "clearance",
               "description": "Clearance rate of the drug",
               "unit": "L/time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -881,13 +922,13 @@
               "name": "clearance",
               "description": "Clearance rate of the drug",
               "unit": "L/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "volumeOfDistribution",
               "description": "Volume of distribution of the drug",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -901,19 +942,19 @@
               "name": "dose",
               "description": "Administered dose of the drug",
               "unit": "mg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "clearance",
               "description": "Clearance rate of the drug",
               "unit": "L/time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -927,7 +968,7 @@
               "name": "halfLife",
               "description": "Half-life of the drug",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -941,13 +982,13 @@
               "name": "k",
               "description": "Elimination rate constant",
               "unit": "1/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "tau",
               "description": "Dosing interval",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -961,19 +1002,19 @@
               "name": "dose",
               "description": "Administered dose of the drug",
               "unit": "mg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bioavailability",
               "description": "Fraction of the drug that reaches systemic circulation",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "volumeOfDistribution",
               "description": "Volume of distribution of the drug",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -987,19 +1028,19 @@
               "name": "cmax",
               "description": "Peak plasma concentration",
               "unit": "mg/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "k",
               "description": "Elimination rate constant",
               "unit": "1/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "tau",
               "description": "Dosing interval",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1013,13 +1054,13 @@
               "name": "td50",
               "description": "Median toxic dose",
               "unit": "mg/kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "ed50",
               "description": "Median effective dose",
               "unit": "mg/kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1033,13 +1074,13 @@
               "name": "targetConcentration",
               "description": "Desired plasma concentration of the drug",
               "unit": "mg/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "adjustedVolumeOfDistribution",
               "description": "Adjusted volume of distribution based on patient factors",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -1060,7 +1101,7 @@
               "name": "hemoglobin",
               "description": "Hemoglobin concentration",
               "unit": "g/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1074,13 +1115,13 @@
               "name": "stdDevRBCVolume",
               "description": "Standard deviation of red blood cell volume",
               "unit": "fL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "meanCorpuscularVolume",
               "description": "Mean corpuscular volume",
               "unit": "fL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1094,25 +1135,25 @@
               "name": "reticulocyteCount",
               "description": "Reticulocyte count",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "hematocrit",
               "description": "Patient's hematocrit level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "normalHematocrit",
               "description": "Normal hematocrit level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "maturationFactor",
               "description": "Maturation factor based on hematocrit level",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1126,13 +1167,13 @@
               "name": "plateletVolume",
               "description": "Total platelet volume",
               "unit": "fL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "plateletCount",
               "description": "Platelet count",
               "unit": "million/μL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1146,13 +1187,13 @@
               "name": "neutrophilCount",
               "description": "Absolute neutrophil count",
               "unit": "cells/μL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "lymphocyteCount",
               "description": "Absolute lymphocyte count",
               "unit": "cells/μL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1166,19 +1207,19 @@
               "name": "reticulocyteCount",
               "description": "Reticulocyte count",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "patientsHematocrit",
               "description": "Patient's hematocrit level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "normalHematocrit",
               "description": "Normal hematocrit level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1192,13 +1233,13 @@
               "name": "measuredCalcium",
               "description": "Measured calcium level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "albumin",
               "description": "Albumin level",
               "unit": "g/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1212,25 +1253,25 @@
               "name": "sodium",
               "description": "Sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "potassium",
               "description": "Potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "chloride",
               "description": "Chloride level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bicarbonate",
               "description": "Bicarbonate level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1244,27 +1285,27 @@
               "name": "serumCreatinine",
               "description": "Serum creatinine level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "age",
               "description": "Patient's age",
               "unit": "years",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             },
             {
               "name": "race",
               "description": "Patient's race",
               "unit": "N/A",
               "type": "string",
-              "enum": ["Black", "Non-Black"]
+              "options": ["Black", "Non-Black"]
             }
           ]
         },
@@ -1278,13 +1319,13 @@
               "name": "hematocrit",
               "description": "Hematocrit level",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "rbcCount",
               "description": "Red blood cell count",
               "unit": "million/μL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1298,13 +1339,13 @@
               "name": "serumIron",
               "description": "Serum iron level",
               "unit": "μg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "tibc",
               "description": "Total iron binding capacity",
               "unit": "μg/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -1325,13 +1366,13 @@
               "name": "strokeVolume",
               "description": "Volume of blood pumped per heartbeat",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "heartRate",
               "description": "Number of heartbeats per minute",
               "unit": "bpm",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1345,13 +1386,13 @@
               "name": "endDiastolicVolume",
               "description": "Volume of blood in the ventricle at the end of diastole",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "endSystolicVolume",
               "description": "Volume of blood in the ventricle at the end of systole",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1365,13 +1406,13 @@
               "name": "systolic",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "diastolic",
               "description": "Diastolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1385,19 +1426,19 @@
               "name": "map",
               "description": "Mean arterial pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "cvp",
               "description": "Central venous pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "cardiacOutput",
               "description": "Cardiac output",
               "unit": "L/min",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1411,13 +1452,13 @@
               "name": "systolicBP",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "diastolicBP",
               "description": "Diastolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1431,13 +1472,13 @@
               "name": "strokeVolume",
               "description": "Volume of blood pumped per heartbeat",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "endDiastolicVolume",
               "description": "Volume of blood in the ventricle at the end of diastole",
               "unit": "mL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1451,13 +1492,13 @@
               "name": "cardiacOutput",
               "description": "Cardiac output",
               "unit": "L/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bodySurfaceArea",
               "description": "Body surface area",
               "unit": "m²",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1471,19 +1512,19 @@
               "name": "map",
               "description": "Mean arterial pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "pcwp",
               "description": "Pulmonary capillary wedge pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "strokeVolumeIndex",
               "description": "Stroke volume index",
               "unit": "mL/m²",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1497,13 +1538,13 @@
               "name": "heartRate",
               "description": "Heart rate",
               "unit": "beats/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "systolicBP",
               "description": "Systolic blood pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1517,13 +1558,13 @@
               "name": "lvedd",
               "description": "Left ventricular end-diastolic diameter",
               "unit": "mm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "lvesd",
               "description": "Left ventricular end-systolic diameter",
               "unit": "mm",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1537,13 +1578,13 @@
               "name": "qtInterval",
               "description": "Measured QT interval",
               "unit": "ms",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "rrInterval",
               "description": "RR interval",
               "unit": "s",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -1564,14 +1605,14 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             }
           ]
         },
@@ -1585,13 +1626,13 @@
               "name": "boneMass",
               "description": "Mass of the bone",
               "unit": "g",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "boneArea",
               "description": "Area of the bone",
               "unit": "cm²",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1606,13 +1647,13 @@
               "name": "waistCircumference",
               "description": "Circumference of the waist",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "hipCircumference",
               "description": "Circumference of the hips",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1626,19 +1667,19 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bsa",
               "description": "Body surface area",
               "unit": "m²",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "dosageFactor",
               "description": "Dosage factor based on clinical guidelines",
               "unit": "mg/kg or mg/m²",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1652,13 +1693,13 @@
               "name": "bmr",
               "description": "Basal metabolic rate",
               "unit": "kcal/day",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "activityFactor",
               "description": "Activity level multiplier",
               "unit": "N/A",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1672,13 +1713,13 @@
               "name": "height",
               "description": "Patient's height",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1692,13 +1733,13 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bodyFatPercentage",
               "description": "Body fat percentage",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1712,19 +1753,19 @@
               "name": "heightAtEnd",
               "description": "Height at the end of the time period",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "heightAtStart",
               "description": "Height at the start of the time period",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "timePeriod",
               "description": "Duration of the time period",
               "unit": "years",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1739,26 +1780,26 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "height",
               "description": "Patient's height",
               "unit": "cm",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "age",
               "description": "Patient's age",
               "unit": "years",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             }
           ]
         },
@@ -1773,41 +1814,54 @@
               "name": "bmi",
               "description": "Body Mass Index",
               "unit": "kg/m²",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "age",
               "description": "Patient's age",
               "unit": "years",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             }
           ]
         },
 
         {
           "name": "Resting Energy Expenditure (REE)",
-          "description": "Calculates the resting energy expenditure to estimate daily caloric needs.",
-          "formula": "REE (kcal/day) = BMR × Activity Factor",
+          "description": "Calculates the resting energy expenditure to estimate daily caloric needs using the Mifflin-St Jeor equation.",
+          "formula": "REE (kcal/day) = (10 × Weight (kg)) + (6.25 × Height (cm)) - (5 × Age (years)) + (5 if male, -161 if female)",
           "result_unit": "kcal/day",
           "parameters": [
             {
-              "name": "bmr",
-              "description": "Basal metabolic rate",
-              "unit": "kcal/day",
-              "type": "number"
+              "name": "weight",
+              "description": "Patient's weight",
+              "unit": "kg",
+              "type": "float"
             },
             {
-              "name": "activityFactor",
-              "description": "Activity level multiplier",
+              "name": "height",
+              "description": "Patient's height",
+              "unit": "cm",
+              "type": "float"
+            },
+            {
+              "name": "age",
+              "description": "Patient's age",
+              "unit": "years",
+              "type": "integer"
+            },
+            {
+              "name": "sex",
+              "description": "Patient's biological sex",
               "unit": "N/A",
-              "type": "number"
+              "type": "string",
+              "options": ["Male", "Female"]
             }
           ]
         }
@@ -1828,19 +1882,19 @@
               "name": "contactRate",
               "description": "Average number of contacts per person per unit time",
               "unit": "contacts/time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "transmissionProbability",
               "description": "Probability of disease transmission per contact",
               "unit": "percentage (expressed as decimal)",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "durationOfInfectiousness",
               "description": "Duration an individual remains infectious",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1854,19 +1908,19 @@
               "name": "r0",
               "description": "Basic reproduction number",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "susceptiblePopulation",
               "description": "Number of susceptible individuals in the population",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "totalPopulation",
               "description": "Total population size",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -1880,13 +1934,13 @@
               "name": "numberOfDeaths",
               "description": "Total number of deaths due to the disease",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "totalInfectedIndividuals",
               "description": "Total number of infected individuals, including asymptomatic cases",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -1900,13 +1954,13 @@
               "name": "secondaryCaseOnset",
               "description": "Time of symptom onset in the secondary case",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "primaryCaseOnset",
               "description": "Time of symptom onset in the primary case",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -1920,42 +1974,17 @@
               "name": "transmissionWithQuarantine",
               "description": "Number of transmissions observed with quarantine measures",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "transmissionWithoutQuarantine",
               "description": "Number of transmissions observed without quarantine measures",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
-        {
-          "name": "Basic Reproduction Number (R0)",
-          "description": "Estimates the average number of secondary infections caused by one infected individual in a fully susceptible population.",
-          "formula": "R0 = (Contact Rate × Transmission Probability × Duration of Infectiousness)",
-          "result_unit": "unitless",
-          "parameters": [
-            {
-              "name": "contactRate",
-              "description": "Average number of contacts per person per unit time",
-              "unit": "contacts/time",
-              "type": "number"
-            },
-            {
-              "name": "transmissionProbability",
-              "description": "Probability of disease transmission per contact",
-              "unit": "percentage (expressed as decimal)",
-              "type": "number"
-            },
-            {
-              "name": "durationOfInfectiousness",
-              "description": "Duration an individual remains infectious",
-              "unit": "time",
-              "type": "number"
-            }
-          ]
-        },
+
         {
           "name": "Case Fatality Rate (CFR)",
           "description": "Calculates the proportion of deaths among confirmed cases of a disease.",
@@ -1966,13 +1995,13 @@
               "name": "numberOfDeaths",
               "description": "Total number of deaths due to the disease",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "numberOfConfirmedCases",
               "description": "Total number of confirmed cases of the disease",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -1986,13 +2015,13 @@
               "name": "numberOfIllIndividuals",
               "description": "Number of individuals who became ill",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "totalPopulationAtRisk",
               "description": "Total population exposed to the risk of infection",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2006,19 +2035,19 @@
               "name": "numberOfNewCases",
               "description": "Number of new cases of the disease",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "populationAtRisk",
               "description": "Population at risk during the time period",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "time",
               "description": "Time period over which cases are measured",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2032,13 +2061,13 @@
               "name": "numberOfSecondaryCases",
               "description": "Number of secondary cases",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "numberOfExposedContacts",
               "description": "Number of contacts exposed to the primary case",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2052,7 +2081,7 @@
               "name": "r0",
               "description": "Basic reproduction number",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2066,13 +2095,13 @@
               "name": "numberOfExistingCases",
               "description": "Number of individuals with the disease",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "totalPopulation",
               "description": "Total population at the time of measurement",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2086,7 +2115,7 @@
               "name": "growthRate",
               "description": "Rate of growth of the disease",
               "unit": "rate",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -2107,19 +2136,19 @@
               "name": "desiredSodium",
               "description": "Target sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "currentSodium",
               "description": "Current sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyWater",
               "description": "Total body water (estimated as 0.6 × body weight in males, 0.5 × body weight in females)",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2133,19 +2162,19 @@
               "name": "desiredChloride",
               "description": "Target chloride level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "currentChloride",
               "description": "Current chloride level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyWater",
               "description": "Total body water (estimated as 0.6 × body weight in males, 0.5 × body weight in females)",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2159,13 +2188,13 @@
               "name": "baseDeficit",
               "description": "Base deficit (difference between normal and current bicarbonate levels)",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyWater",
               "description": "Total body water (estimated as 0.6 × body weight in males, 0.5 × body weight in females)",
               "unit": "L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2179,13 +2208,13 @@
               "name": "phosphateReplacement",
               "description": "Calculated phosphate replacement",
               "unit": "mmol",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "correctionFactor",
               "description": "Correction factor based on calcium levels",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2199,13 +2228,13 @@
               "name": "currentPotassium",
               "description": "Current potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "targetPotassium",
               "description": "Target potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2219,19 +2248,19 @@
               "name": "desiredPotassium",
               "description": "Target potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "currentPotassium",
               "description": "Current potassium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyPotassium",
               "description": "Total body potassium (estimated as 50 mEq/L × body weight in kg)",
               "unit": "mEq",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2245,13 +2274,13 @@
               "name": "measuredCalcium",
               "description": "Measured calcium level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "albumin",
               "description": "Albumin level",
               "unit": "g/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2265,51 +2294,19 @@
               "name": "desiredMagnesium",
               "description": "Target magnesium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "currentMagnesium",
               "description": "Current magnesium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyMagnesium",
               "description": "Total body magnesium (estimated as 0.2 × body weight in kg)",
               "unit": "mEq",
-              "type": "number"
-            }
-          ]
-        },
-        {
-          "name": "Anion Gap",
-          "description": "Calculates the anion gap to assess acid-base balance.",
-          "formula": "Anion Gap = (Na+ + K+) - (Cl- + HCO3-)",
-          "result_unit": "mEq/L",
-          "parameters": [
-            {
-              "name": "sodium",
-              "description": "Sodium level",
-              "unit": "mEq/L",
-              "type": "number"
-            },
-            {
-              "name": "potassium",
-              "description": "Potassium level",
-              "unit": "mEq/L",
-              "type": "number"
-            },
-            {
-              "name": "chloride",
-              "description": "Chloride level",
-              "unit": "mEq/L",
-              "type": "number"
-            },
-            {
-              "name": "bicarbonate",
-              "description": "Bicarbonate level",
-              "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2323,19 +2320,19 @@
               "name": "desiredPhosphate",
               "description": "Target phosphate level",
               "unit": "mmol/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "currentPhosphate",
               "description": "Current phosphate level",
               "unit": "mmol/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "totalBodyPhosphate",
               "description": "Total body phosphate (estimated as 0.3 × body weight in kg)",
               "unit": "mmol",
-              "type": "number"
+              "type": "float"
             }
           ]
         }
@@ -2347,21 +2344,6 @@
       "description": "Access additional medical calculations for specialized care scenarios. Includes oxygen delivery calculations, burn assessment, and specialty-specific tools. Supports comprehensive medical decision-making.",
       "calculations": [
         {
-          "name": "Burn Area (Rule of Nines)",
-          "description": "Estimates the total body surface area (TBSA) affected by burns using the Rule of Nines.",
-          "formula": "TBSA (%) = Sum of affected areas based on Rule of Nines",
-          "result_unit": "%",
-          "parameters": [
-            {
-              "name": "affectedAreas",
-              "description": "List of affected body areas",
-              "unit": "N/A",
-              "type": "array",
-              "enum": ["head", "arm", "leg", "torso", "perineum"]
-            }
-          ]
-        },
-        {
           "name": "Parkland Formula",
           "description": "Calculates fluid resuscitation requirements for burn patients.",
           "formula": "Total Fluid (mL) = 4 × Weight (kg) × TBSA (%)",
@@ -2371,13 +2353,13 @@
               "name": "weight",
               "description": "Patient's weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "tbsa",
               "description": "Total body surface area affected by burns",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2391,25 +2373,25 @@
               "name": "cardiacOutput",
               "description": "Cardiac output",
               "unit": "L/min",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "hemoglobin",
               "description": "Hemoglobin concentration",
               "unit": "g/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "saO2",
               "description": "Arterial oxygen saturation",
               "unit": "%",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "paO2",
               "description": "Partial pressure of oxygen",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2423,14 +2405,14 @@
               "name": "height",
               "description": "Patient's height",
               "unit": "in",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "sex",
               "description": "Patient's biological sex",
               "unit": "N/A",
               "type": "string",
-              "enum": ["male", "female"]
+              "options": ["Male", "Female"]
             }
           ]
         },
@@ -2444,13 +2426,13 @@
               "name": "ibw",
               "description": "Ideal body weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "actualWeight",
               "description": "Patient's actual weight",
               "unit": "kg",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2464,13 +2446,13 @@
               "name": "measuredSodium",
               "description": "Measured sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "glucose",
               "description": "Blood glucose level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2481,16 +2463,16 @@
           "result_unit": "mmHg",
           "parameters": [
             {
-              "name": "pao2",
-              "description": "Arterial oxygen pressure",
-              "unit": "mmHg",
-              "type": "number"
-            },
-            {
-              "name": "pao2",
+              "name": "PAO2",
               "description": "Alveolar oxygen pressure",
               "unit": "mmHg",
-              "type": "number"
+              "type": "float"
+            },
+            {
+              "name": "PaO2",
+              "description": "Arterial oxygen pressure",
+              "unit": "mmHg",
+              "type": "float"
             }
           ]
         },
@@ -2504,25 +2486,25 @@
               "name": "urineSodium",
               "description": "Urine sodium concentration",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "plasmaCreatinine",
               "description": "Plasma creatinine level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "plasmaSodium",
               "description": "Plasma sodium concentration",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "urineCreatinine",
               "description": "Urine creatinine level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2536,19 +2518,19 @@
               "name": "sodium",
               "description": "Sodium level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "glucose",
               "description": "Blood glucose level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "bun",
               "description": "Blood urea nitrogen level",
               "unit": "mg/dL",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2562,7 +2544,45 @@
               "name": "hco3",
               "description": "Bicarbonate level",
               "unit": "mEq/L",
-              "type": "number"
+              "type": "float"
+            }
+          ]
+        },
+        {
+          "name": "Alveolar Partial Pressure of Oxygen (PAO2)",
+          "description": "Calculates the alveolar partial pressure of oxygen (PAO2).",
+          "formula": "PAO2 = FiO2 × (Barometric Pressure - Water Vapor Pressure) - (PaCO2 / Respiratory Quotient)",
+          "result_unit": "mmHg",
+          "parameters": [
+            {
+              "name": "fiO2",
+              "description": "Fraction of inspired oxygen (expressed as a decimal, e.g., 0.21 for room air)",
+              "unit": "unitless",
+              "type": "float"
+            },
+            {
+              "name": "barometricPressure",
+              "description": "Barometric pressure",
+              "unit": "mmHg",
+              "type": "float"
+            },
+            {
+              "name": "waterVaporPressure",
+              "description": "Water vapor pressure (typically 47 mmHg at body temperature)",
+              "unit": "mmHg",
+              "type": "float"
+            },
+            {
+              "name": "paCO2",
+              "description": "Arterial partial pressure of carbon dioxide",
+              "unit": "mmHg",
+              "type": "float"
+            },
+            {
+              "name": "respiratoryQuotient",
+              "description": "Respiratory quotient (typically 0.8)",
+              "unit": "unitless",
+              "type": "float"
             }
           ]
         }
@@ -2583,13 +2603,13 @@
               "name": "truePositives",
               "description": "Number of true positive results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "falseNegatives",
               "description": "Number of false negative results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2603,13 +2623,13 @@
               "name": "trueNegatives",
               "description": "Number of true negative results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "falsePositives",
               "description": "Number of false positive results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2623,13 +2643,13 @@
               "name": "truePositives",
               "description": "Number of true positive results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "falsePositives",
               "description": "Number of false positive results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             }
           ]
         },
@@ -2643,13 +2663,45 @@
               "name": "trueNegatives",
               "description": "Number of true negative results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "falseNegatives",
               "description": "Number of false negative results",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "name": "Accuracy",
+          "description": "Calculates the accuracy of a diagnostic test.",
+          "formula": "Accuracy (%) = ((True Positives + True Negatives) / Total Cases) × 100",
+          "result_unit": "%",
+          "parameters": [
+            {
+              "name": "truePositives",
+              "description": "Number of true positive results",
+              "unit": "count",
+              "type": "integer"
+            },
+            {
+              "name": "trueNegatives",
+              "description": "Number of true negative results",
+              "unit": "count",
+              "type": "integer"
+            },
+            {
+              "name": "falsePositives",
+              "description": "Number of false positive results",
+              "unit": "count",
+              "type": "integer"
+            },
+            {
+              "name": "falseNegatives",
+              "description": "Number of false negative results",
+              "unit": "count",
+              "type": "integer"
             }
           ]
         },
@@ -2663,13 +2715,53 @@
               "name": "numberOfCases",
               "description": "Number of cases in the population",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "totalPopulation",
               "description": "Total population size",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "name": "Positive Likelihood Ratio (LR+)",
+          "description": "Calculates the positive likelihood ratio of a diagnostic test.",
+          "formula": "LR+ = Sensitivity / (1 - Specificity)",
+          "result_unit": "unitless",
+          "parameters": [
+            {
+              "name": "sensitivity",
+              "description": "Sensitivity of the test (expressed as a decimal, e.g., 0.85)",
+              "unit": "unitless",
+              "type": "float"
+            },
+            {
+              "name": "specificity",
+              "description": "Specificity of the test (expressed as a decimal, e.g., 0.90)",
+              "unit": "unitless",
+              "type": "float"
+            }
+          ]
+        },
+        {
+          "name": "Negative Likelihood Ratio (LR-)",
+          "description": "Calculates the negative likelihood ratio of a diagnostic test.",
+          "formula": "LR- = (1 - Sensitivity) / Specificity",
+          "result_unit": "unitless",
+          "parameters": [
+            {
+              "name": "sensitivity",
+              "description": "Sensitivity of the test (expressed as a decimal, e.g., 0.85)",
+              "unit": "unitless",
+              "type": "float"
+            },
+            {
+              "name": "specificity",
+              "description": "Specificity of the test (expressed as a decimal, e.g., 0.90)",
+              "unit": "unitless",
+              "type": "float"
             }
           ]
         },
@@ -2683,19 +2775,19 @@
               "name": "numberOfNewCases",
               "description": "Number of new cases",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "populationAtRisk",
               "description": "Population at risk during the time period",
               "unit": "count",
-              "type": "number"
+              "type": "integer"
             },
             {
               "name": "time",
               "description": "Time period over which cases are measured",
               "unit": "time",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2709,13 +2801,13 @@
               "name": "oddsExposureCases",
               "description": "Odds of exposure in cases",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "oddsExposureControls",
               "description": "Odds of exposure in controls",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2729,13 +2821,13 @@
               "name": "riskExposedGroup",
               "description": "Risk in the exposed group",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             },
             {
               "name": "riskUnexposedGroup",
               "description": "Risk in the unexposed group",
               "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         },
@@ -2749,33 +2841,7 @@
               "name": "absoluteRiskReduction",
               "description": "Absolute reduction in risk between treatment and control groups",
               "unit": "unitless",
-              "type": "number"
-            }
-          ]
-        },
-        {
-          "name": "Confidence Interval (CI)",
-          "description": "Calculates the confidence interval for a given estimate.",
-          "formula": "CI = Estimate ± (Critical Value × Standard Error)",
-          "result_unit": "range",
-          "parameters": [
-            {
-              "name": "estimate",
-              "description": "Point estimate of the parameter",
-              "unit": "unitless",
-              "type": "number"
-            },
-            {
-              "name": "criticalValue",
-              "description": "Critical value based on confidence level",
-              "unit": "unitless",
-              "type": "number"
-            },
-            {
-              "name": "standardError",
-              "description": "Standard error of the estimate",
-              "unit": "unitless",
-              "type": "number"
+              "type": "float"
             }
           ]
         }

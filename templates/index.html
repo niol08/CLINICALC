@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% block head %}
 <title>Home</title>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
 {% endblock %} {% block content %}
 <section id="hero">
   <!-- Navigation bar -->
@@ -15,17 +17,36 @@
       </li>
       <div class="nav-links">
         <ul>
-          <li><a href="">Recent</a></li>
-          <li><a href="">Categories</a></li>
-          <li><a href="">Contact</a></li>
           <li>
-            <a href=""
-              ><img
+            <a
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#recentModal"
+              id="recent-link"
+              >Recent</a
+            >
+          </li>
+          <li><a href="#Categories">Categories</a></li>
+          <li><a href="#footer">Contact</a></li>
+          <!-- <li>
+            <button
+              id="toggle-mode"
+              type="button"
+              aria-label="Toggle dark mode"
+              style="
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+              "
+            >
+              <img
                 class="mode"
                 src="{{ url_for('static', filename='images/dark.svg') }}"
                 alt="mode"
-            /></a>
-          </li>
+              />
+            </button>
+          </li> -->
         </ul>
       </div>
     </ul>
@@ -46,6 +67,8 @@
           alt="Search"
           class="search-icon"
         />
+
+        <div id="live-search-results"></div>
       </div>
     </form>
   </div>
@@ -69,7 +92,7 @@
       calculations simple, enabling nurses to deliver precise, evidence-based
       care with confidence.
     </p>
-    <a href="" class="get-started">Get Started!</a>
+    <a href="#Categories" class="get-started"> Get Started </a>
   </div>
 </section>
 <section id="Categories">
@@ -82,6 +105,7 @@
       onclick="redirectToDetailPage(this)"
     >
       <img
+        id="card-image"
         src="{{ url_for('static', filename='images/' + card.slug + '.svg') }}"
         alt="{{ card.title }}"
       />
@@ -91,13 +115,8 @@
     {% endfor %}
   </div>
 </section>
-<footer>
+<footer id="footer">
   <div class="footer-container">
-    <div class="footer-section">
-      <h4>Contact</h4>
-      <p>Email: contact@clinicalc.com</p>
-      <p>Phone: +123 456 7890</p>
-    </div>
     <div class="footer-section">
       <h4>Authors</h4>
       <p>Mariam Siyanbola.</p>
@@ -105,12 +124,67 @@
     </div>
     <div class="footer-section">
       <h4>About</h4>
-      <p>CLNICALC is a tool for nursing informatics calculations.</p>
+      <p>
+        CLNICALC is a tool for nursing informatics calculations. It simplifies
+        complex calculations, enabling nurses to deliver precise, evidence-based
+        care with confidence.
+      </p>
+    </div>
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <p>Email: contact@clinicalc.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+    <div class="footer-section">
+      <h4>Contribute</h4>
+      <p>
+        <a
+          href="https://github.com/niol08/CLINICALC.git"
+          target="_blank"
+          rel="noopener"
+          >Fork the repo here</a
+        >
+      </p>
+    </div>
+    <div class="footer-section">
+      <h4>Feedback</h4>
+      <p>
+        <a
+          href="https://forms.gle/dedzjteKgwVjqMqR8"
+          target="_blank"
+          rel="noopener"
+          >Give us your feedback</a
+        >
+        |
+        <a
+          href="https://github.com/niol08/CLINICALC/issues"
+          target="_blank"
+          rel="noopener"
+          >report an issue</a
+        >
+      </p>
     </div>
     <div class="footer-section">
       <h4>Follow Us</h4>
-      <p><a href="#">Twitter</a></p>
-      <p><a href="#">Facebook</a></p>
+      <div class="social-icons">
+        <p>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+        </p>
+        <p>
+          <a
+            href="https://github.com/niol08/CLINICALC.git"
+            target="_blank"
+            rel="noopener"
+            ><i class="bi bi-github"></i
+          ></a>
+        </p>
+        <p>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="bi bi-envelope-open"></i></a>
+        </p>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -119,17 +193,5 @@
     </p>
   </div>
 </footer>
-<script>
-  function redirectToDetailPage(element) {
-    const slug = element.getAttribute('data-slug');
-    window.location.href = `/card/${slug}`;
-  }
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const yearSpan = document.getElementById('current-year');
-    const currentYear = new Date().getFullYear();
-    yearSpan.textContent = currentYear;
-  });
-</script>
+
 {% endblock %}

@@ -1,12 +1,11 @@
 {% extends 'base.html' %} {% block head %}
-<title>{{ category.title }} - CLNICALC</title>
+<title>Search Results - CLNICALC</title>
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/slug.css') }}"
 />
-<script src="{{ url_for('static', filename='js/card_detail.js') }}"></script>
 {% endblock %} {% block content %}
-<!-- Navigation bar -->
+
 <nav class="nav-bar">
   <ul>
     <li>
@@ -43,32 +42,29 @@
   </ul>
 </nav>
 
-<section id="card-detail">
-  <!-- Page Header -->
+<section id="search-results">
   <div class="page-header">
-    <h2>{{ category.title }}</h2>
-    <p>{{ category.description }}</p>
+    <h3>Search Results</h3>
   </div>
 
-  <!-- Calculations Section -->
-  <h3>Available Calculations</h3>
-
-  <div class="calculation-cards">
-    {% for calculation in category.calculations %} {% set calc_index =
-    loop.index %}
+  {% if results %}
+  <div class="calculation-cards grid-container">
+    {% for calc in results %} {% set calc_index = loop.index %}
     <div
-      class="calculation-card"
+      class="calculation-card max-width"
       data-bs-toggle="modal"
       data-bs-target="#calculationModal-{{ calc_index }}"
     >
       <div class="card-body">
         <div class="card-content">
-          <h5 class="card-title">{{ calculation.name }}</h5>
-          <p class="card-text">{{ calculation.description }}</p>
+          <h5 class="card-title">{{ calc.name }}</h5>
+          <p class="card-text">{{ calc.description }}</p>
         </div>
+        {% if calc.result_unit %}
         <div class="card-footer">
-          <span class="card-unit">{{ calculation.result_unit }}</span>
+          <span class="card-unit">{{ calc.result_unit }}</span>
         </div>
+        {% endif %}
       </div>
     </div>
 
@@ -83,7 +79,7 @@
         <div class="modal-content" style="border-radius: 12px">
           <div class="modal-header" style="background: #f8fafc">
             <h5 class="modal-title" id="modalLabel-{{ calc_index }}">
-              {{ calculation.name }}
+              {{ calc.name }}
             </h5>
             <button
               type="button"
@@ -98,13 +94,14 @@
               id="calc-form-{{ calc_index }}"
               data-index="{{ calc_index }}"
               method="POST"
+              action="{{ url_for('card_detail', slug=calc.category_slug) }}"
             >
               <input
                 type="hidden"
                 name="calculation_name"
-                value="{{ calculation.name }}"
+                value="{{ calc.name }}"
               />
-              {% for param in calculation.parameters %}
+              {% for param in calc.parameters %}
               <div class="mb-3">
                 <label
                   for="param-{{ calc_index }}-{{ param.name }}"
@@ -115,7 +112,6 @@
                   }}){% endif %}
                 </label>
                 {% if param.type == 'boolean' %}
-                <!-- Boolean: Yes/No radio buttons -->
                 <div>
                   <div class="form-check form-check-inline">
                     <input
@@ -150,7 +146,6 @@
                   </div>
                 </div>
                 {% elif param.enum %}
-                <!-- Enum: Dropdown -->
                 <select
                   class="form-control"
                   id="param-{{ calc_index }}-{{ param.name }}"
@@ -162,7 +157,6 @@
                   {% endfor %}
                 </select>
                 {% elif param.options %}
-                <!-- String with options: Radio buttons -->
                 <div>
                   {% for option in param.options %}
                   <div class="form-check form-check-inline">
@@ -183,11 +177,9 @@
                   </div>
                   {% endfor %}
                 </div>
-                {% else %}
-                <!-- Number input -->
-                <input type="number" {% if param.type == 'float' %}step="any"{%
-                elif param.type == 'integer' %}step="1"{% endif %}
-                class="form-control" id="param-{{ calc_index }}-{{ param.name
+                {% else %} <input type="number" {% if param.type == 'float'
+                %}step="any"{% elif param.type == 'integer' %}step="1"{% endif
+                %} class="form-control" id="param-{{ calc_index }}-{{ param.name
                 }}" name="{{ param.name }}" required /> {% endif %}
               </div>
               {% endfor %}
@@ -210,6 +202,10 @@
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <p>No results found.</p>
+  {% endif %}
+
   <a href="{{ url_for('index') }}" class="back-button">Back to Home</a>
 </section>
 
@@ -227,5 +223,4 @@
     </p>
   </div>
 </footer>
-
 {% endblock %}
