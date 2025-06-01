@@ -6,7 +6,7 @@
 }
 img {
   display: block;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 button {
   background-color: rgba(0, 0, 0, 0);
@@ -15,6 +15,11 @@ button {
 }
 .logo {
   width: 20em;
+}
+html,
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 ul {
   list-style-type: none;
@@ -45,6 +50,7 @@ body::-webkit-scrollbar {
 #hero {
   background-image: url('../images/banner.jpg');
   background-size: cover;
+  min-height: 20rem;
   height: 50vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -174,7 +180,7 @@ section {
   transition: all 0.3s ease;
   overflow: hidden;
   position: relative;
-  height: 18rem;
+  height: 20rem;
   display: flex;
   flex-direction: column;
 }
@@ -205,6 +211,7 @@ section {
 #card-image {
   width: 3em;
   height: 3em;
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
