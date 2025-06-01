@@ -4,6 +4,10 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/slug.css') }}"
 />
+<script
+  src="{{ url_for('static', filename='JS/card_detail.js') }}"
+  defer
+></script>
 
 {% endblock %} {% block content %}
 <!-- Navigation bar -->
@@ -229,4 +233,3 @@
 </footer>
 
 {% endblock %}
-<script src="{{ url_for('static', filename='JS/card_detail.js') }}"></script>

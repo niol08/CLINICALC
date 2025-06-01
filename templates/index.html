@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block head %}
 <title>Home</title>
+<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
 
 {% endblock %} {% block content %}
 <section id="hero">
@@ -193,4 +194,3 @@
   </div>
 </footer>
 {% endblock %}
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
