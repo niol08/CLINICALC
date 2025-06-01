@@ -162,3 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+function redirectToDetailPage(element) {
+  const slug = element.getAttribute('data-slug');
+  window.location.href = `/card/${slug}`;
+}
