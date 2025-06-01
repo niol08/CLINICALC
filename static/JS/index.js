@@ -2,6 +2,7 @@ function redirectToDetailPage(element) {
   const slug = element.getAttribute('data-slug');
   window.location.href = `/card/${slug}`;
 }
+window.redirectToDetailPage = redirectToDetailPage;
 
 document.addEventListener('DOMContentLoaded', function () {
   const yearSpan = document.getElementById('current-year');
