@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% block head %}
 <title>Home</title>
-<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
 
 {% endblock %} {% block content %}
 <section id="hero">
@@ -99,11 +98,7 @@
   <h2 class="Categories-header">Categories</h2>
   <div class="grid-container">
     {% for card in cards %}
-    <div
-      class="card"
-      data-slug="{{ card.slug }}"
-      onclick="redirectToDetailPage(this)"
-    >
+    <div class="card" data-slug="{{ card.slug }}">
       <img
         id="card-image"
         src="{{ url_for('static', filename='images/' + card.slug + '.svg') }}"
@@ -193,5 +188,5 @@
     </p>
   </div>
 </footer>
-
 {% endblock %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>

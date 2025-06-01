@@ -5,6 +5,15 @@ function redirectToDetailPage(element) {
 window.redirectToDetailPage = redirectToDetailPage;
 
 document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.card[data-slug]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      const slug = card.getAttribute('data-slug');
+      window.location.href = `/card/${slug}`;
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
   const yearSpan = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   yearSpan.textContent = currentYear;
