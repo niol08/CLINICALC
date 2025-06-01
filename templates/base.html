@@ -38,7 +38,14 @@
       href="{{ url_for('static', filename='css/style.css') }}"
     />
     <script src="{{ url_for('static', filename='JS/main.js') }}" defer></script>
-
+    <script
+      src="{{ url_for('static', filename='JS/index.js') }}"
+      defer
+    ></script>
+    <script
+      src="{{ url_for('static', filename='JS/card_detail.js') }}"
+      defer
+    ></script>
     {% block head %}{% endblock %}
   </head>
   <body>
