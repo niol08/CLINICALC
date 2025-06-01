@@ -98,7 +98,11 @@
   <h2 class="Categories-header">Categories</h2>
   <div class="grid-container">
     {% for card in cards %}
-    <div class="card" data-slug="{{ card.slug }}">
+    <div
+      class="card"
+      data-slug="{{ card.slug }}"
+      onclick="redirectToDetailPage(this)"
+    >
       <img
         id="card-image"
         src="{{ url_for('static', filename='images/' + card.slug + '.svg') }}"
@@ -189,4 +193,4 @@
   </div>
 </footer>
 {% endblock %}
-<script src="{{ url_for('static', filename='JS/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
