@@ -38,25 +38,48 @@ def execute_function(function_name, parameters):
 
 @app.route('/explain', methods=['POST'])
 def explain():
-    data = request.get_json()
-    calc_name = data.get('calc_name')
-    result = data.get('result')
-    parameters = data.get('parameters', {})
-    patient_age = data.get('patient_age', '')
-    patient_sex = data.get('patient_sex', '')
-    additional_context = data.get('additional_context', '')
+    req_data = request.get_json()
+    calc_name = req_data.get('calc_name')
+    result = req_data.get('result')
+    parameters = req_data.get('parameters', {})
+    additional_context = req_data.get('additional_context', '')
 
   
+    def extract_param(keys):
+        for key in keys:
+            for param_key in parameters:
+                if param_key.lower() == key:
+                    return parameters[param_key]
+        return ''
+
+    age = extract_param(['age'])
+    sex = extract_param(['sex'])
+    race = extract_param(['race'])
+
+   
+    for key in list(parameters.keys()):
+        if key.lower() in ['age', 'sex', 'race']:
+            parameters.pop(key)
+
+    age_str = f"\nPatient Age: {age}" if age else ""
+    sex_str = f"\nPatient Sex: {sex}" if sex else ""
+    race_str = f"\nPatient Race: {race}" if race else ""
+    context_str = f"\nAdditional Context: {additional_context}" if additional_context else ""
+
+    unit = ""
+    for category in data['categories']:
+        for calc in category.get('calculations', []):
+            if calc['name'] == calc_name:
+                unit = calc.get('result_unit', '') or ''
+                break
+    
     param_str = ""
     if parameters:
         param_str = "\nCalculation Parameters:\n" + "\n".join(
             f"- {k}: {v}" for k, v in parameters.items()
         )
-
- 
-    age_str = f"\nPatient Age: {patient_age}" if patient_age else ""
-    sex_str = f"\nPatient Sex: {patient_sex}" if patient_sex else ""
-    context_str = f"\nAdditional Context: {additional_context}" if additional_context else ""
+        
+    
 
     prompt = f"""You are a senior clinical nursing assistant AI. When I provide you a lab value or a medical calculation result, you will:
   1) State whether the result is within the normal reference range (or above/below),
@@ -66,9 +89,13 @@ def explain():
   5) Keep your answer to 3–5 bullet points.
 
 Calculation Name: {calc_name}
-Result Value: {result}{age_str}{sex_str}{context_str}{param_str}
+Result Value: {result} {unit}
+Unit: {unit}
+{age_str}{sex_str}{race_str}{context_str}
+{param_str}
 
 Please provide your explanation now:"""
+    
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {

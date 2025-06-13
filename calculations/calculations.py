@@ -38,13 +38,22 @@ def drip_rate(volume: float, dropFactor: float, time: float) -> float:
     return (volume * dropFactor) / time
 
 
-@register_calc("Medication Dose")
-def medication_dose(desiredDose: float, volume: float, stockStrength: float) -> float:
+@register_calc("Medication Dose (Volume to Administer)")
+def medication_dose_volume_to_administer(desiredDose: float, stockStrength: float) -> float:
     """
-    Calculates the required dose based on available concentration.
-    Formula: Dose = (Desired dose × Volume) / Stock strength
+    Calculates the required volume to administer based on the desired dose and available concentration.
+    Formula: Volume to administer (mL) = Desired Dose (mg) / Stock Strength (mg/mL)
     """
-    return (desiredDose * volume) / stockStrength
+    return desiredDose / stockStrength
+
+
+@register_calc("Medication Dose (Amount of Drug Required)")
+def medication_dose_amount_of_drug_required(desiredConcentration: float, finalVolume: float) -> float:
+    """
+    Calculates the amount of drug needed to achieve a desired concentration in a given final volume.
+    Formula: Amount of drug (mg) = Desired Concentration (mg/mL) × Final Volume (mL)
+    """
+    return desiredConcentration * finalVolume
 
 
 @register_calc("Insulin Dose Calculation")
@@ -121,9 +130,10 @@ def apgar_score(appearance: int, pulse: int, grimace: int, activity: int, respir
 def oxygen_flow_rate(fiO2: float, minuteVentilation: float) -> float:
     """
     Calculates the required oxygen flow rate based on desired FiO2.
-    Formula: Flow Rate (L/min) = (FiO2 × Minute Ventilation) / 21
+    Formula: Flow Rate (L/min) = (FiO2 - 0.21) / 0.79 × Minute Ventilation
     """
-    return (fiO2 * minuteVentilation) / 21
+    pure_O2_fraction = (fiO2 - 0.21) / 0.79
+    return pure_O2_fraction * minuteVentilation
 
 
 @register_calc("Anion Gap")
@@ -138,13 +148,87 @@ def anion_gap(sodium: float, potassium: float, chloride: float, bicarbonate: flo
 
 
 ## Patient Monitoring calculations ##
+def _score_respiratory_rate(rr: float) -> int:
+    if rr <= 8:
+        return 3
+    elif rr <= 11:
+        return 1
+    elif rr <= 20:
+        return 0
+    elif rr <= 24:
+        return 2
+    else:
+        return 3
+
+def _score_oxygen_saturation(spo2: float) -> int:
+    if spo2 <= 91:
+        return 3
+    elif spo2 <= 93:
+        return 2
+    elif spo2 <= 95:
+        return 1
+    else:
+        return 0
+
+def _score_temperature(temp: float) -> int:
+    if temp <= 35.0:
+        return 3
+    elif temp <= 36.0:
+        return 1
+    elif temp <= 38.0:
+        return 0
+    elif temp <= 39.0:
+        return 1
+    else:
+        return 2
+
+def _score_systolic_bp(sbp: float) -> int:
+    if sbp <= 90:
+        return 3
+    elif sbp <= 100:
+        return 2
+    elif sbp <= 110:
+        return 1
+    elif sbp <= 219:
+        return 0
+    else:
+        return 3
+
+def _score_heart_rate(hr: float) -> int:
+    if hr <= 40:
+        return 3
+    elif hr <= 50:
+        return 1
+    elif hr <= 90:
+        return 0
+    elif hr <= 110:
+        return 1
+    elif hr <= 130:
+        return 2
+    else:
+        return 3
+
 @register_calc("Early Warning Score (EWS)")
-def early_warning_score(respiratoryRate: float, oxygenSaturation: float, temperature: float, systolicBP: float, heartRate: float) -> float:
+def early_warning_score(
+    respiratoryRate: float,
+    oxygenSaturation: float,
+    temperature: float,
+    systolicBP: float,
+    heartRate: float
+) -> int:
     """
     Calculates an early warning score based on vital signs to identify patient deterioration.
-    Formula: EWS = Sum of scores for respiratory rate, oxygen saturation, temperature, systolic blood pressure, and heart rate
+    Formula: EWS = Sum of scores for respiratory rate, oxygen saturation, temperature,
+             systolic blood pressure, and heart rate
     """
-    return respiratoryRate + oxygenSaturation + temperature + systolicBP + heartRate
+    rr_score = _score_respiratory_rate(respiratoryRate)
+    spo2_score = _score_oxygen_saturation(oxygenSaturation)
+    temp_score = _score_temperature(temperature)
+    sbp_score = _score_systolic_bp(systolicBP)
+    hr_score = _score_heart_rate(heartRate)
+
+    return rr_score + spo2_score + temp_score + sbp_score + hr_score
+
 
 
 @register_calc("Respiratory Rate to Tidal Volume Ratio")
@@ -660,15 +744,7 @@ def qtc_interval(qtInterval: float, rrInterval: float) -> float:
 
 
 ## Body Mechanism and Growth ##
-@register_calc("Body Water Percentage")
-def body_water_percentage(weight: float, sex: str) -> float:
-    """
-    Estimates the total body water percentage based on weight and sex.
-    Formula: Body Water (%) = (0.6 × Weight for males, 0.5 × Weight for females)
-    sex: 'male' or 'female'
-    """
-    factor = 0.6 if sex.lower() == "male" else 0.5
-    return weight * factor
+
 
 @register_calc("Bone Mineral Density (BMD)")
 def bone_mineral_density(boneMass: float, boneArea: float) -> float:
@@ -823,9 +899,10 @@ def attack_rate(numberOfIllIndividuals: int, totalPopulationAtRisk: int) -> floa
 def incidence_rate(numberOfNewCases: int, populationAtRisk: int, time: float) -> float:
     """
     Calculates the rate of new cases of a disease in a population over a specific time period.
-    Formula: Incidence Rate = (Number of New Cases / Population at Risk) × Time
+    Formula: Incidence Rate = Number of New Cases / (Population at Risk × Time)
     """
-    return (numberOfNewCases / populationAtRisk) * time
+    return numberOfNewCases / (populationAtRisk * time)
+
 
 @register_calc("Secondary Attack Rate")
 def secondary_attack_rate(numberOfSecondaryCases: int, numberOfExposedContacts: int) -> float:
@@ -1095,10 +1172,10 @@ def negative_likelihood_ratio(sensitivity: float, specificity: float) -> float:
 @register_calc("Incidence Rate")
 def incidence_rate(numberOfNewCases: int, populationAtRisk: int, time: float) -> float:
     """
-    Calculates the incidence rate of a condition in a population over a specific time period.
-    Formula: Incidence Rate = (Number of New Cases / Population at Risk) × Time
+    Calculates the rate of new cases of a disease in a population over a specific time period.
+    Formula: Incidence Rate = Number of New Cases / (Population at Risk × Time)
     """
-    return (numberOfNewCases / populationAtRisk) * time
+    return numberOfNewCases / (populationAtRisk * time)
 
 
 @register_calc("Odds Ratio (OR)")

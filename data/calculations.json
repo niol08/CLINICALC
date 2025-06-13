@@ -72,27 +72,41 @@
           ]
         },
         {
-          "name": "Medication Dose",
-          "description": "Calculates the required dose based on available concentration.",
-          "formula": "Dose = (Desired dose × Volume) / Stock strength",
+          "name": "Medication Dose (Volume to Administer)",
+          "description": "Calculates the required volume to administer based on the desired dose and available concentration.",
+          "formula": "Volume to administer (mL) = Desired Dose (mg) / Stock Strength (mg/mL)",
           "result_unit": "mL",
           "parameters": [
             {
               "name": "desiredDose",
               "description": "Dose of medication ordered by the physician",
-              "unit": "varies (mg, mcg, units, etc.)",
-              "type": "float"
-            },
-            {
-              "name": "volume",
-              "description": "Volume of medication solution",
-              "unit": "mL",
+              "unit": "mg",
               "type": "float"
             },
             {
               "name": "stockStrength",
               "description": "Concentration of the medication in stock",
-              "unit": "varies (mg/mL, mcg/mL, units/mL, etc.)",
+              "unit": "mg/mL",
+              "type": "float"
+            }
+          ]
+        },
+        {
+          "name": "Medication Dose (Amount of Drug Required)",
+          "description": "Calculates the amount of drug needed to achieve a desired concentration in a given final volume.",
+          "formula": "Amount of drug (mg) = Desired Concentration (mg/mL) × Final Volume (mL)",
+          "result_unit": "mg",
+          "parameters": [
+            {
+              "name": "desiredConcentration",
+              "description": "Desired concentration of the drug solution",
+              "unit": "mg/mL",
+              "type": "float"
+            },
+            {
+              "name": "finalVolume",
+              "description": "Final total volume of the solution to be prepared",
+              "unit": "mL",
               "type": "float"
             }
           ]
@@ -335,36 +349,36 @@
         {
           "name": "Early Warning Score (EWS)",
           "description": "Calculates an early warning score based on vital signs to identify patient deterioration.",
-          "formula": "EWS = Sum of scores for respiratory rate, oxygen saturation, temperature, systolic blood pressure, and heart rate",
+          "formula": "EWS = Sum of scores for respiratory rate, oxygen saturation, temperature, systolic blood pressure, and heart rate. Each parameter is scored according to defined thresholds.",
           "result_unit": "score",
           "parameters": [
             {
               "name": "respiratoryRate",
-              "description": "Patient's respiratory rate",
+              "description": "Patient's respiratory rate (scoring: ≤8=3, 9–11=1, 12–20=0, 21–24=2, ≥25=3)",
               "unit": "breaths/min",
               "type": "float"
             },
             {
               "name": "oxygenSaturation",
-              "description": "Patient's oxygen saturation level",
+              "description": "Patient's oxygen saturation level (scoring: ≤91=3, 92–93=2, 94–95=1, ≥96=0)",
               "unit": "%",
               "type": "float"
             },
             {
               "name": "temperature",
-              "description": "Patient's body temperature",
+              "description": "Patient's body temperature (scoring: ≤35.0=3, 35.1–36.0=1, 36.1–38.0=0, 38.1–39.0=1, ≥39.1=2)",
               "unit": "°C",
               "type": "float"
             },
             {
               "name": "systolicBP",
-              "description": "Systolic blood pressure",
+              "description": "Systolic blood pressure (scoring: ≤90=3, 91–100=2, 101–110=1, 111–219=0, ≥220=3)",
               "unit": "mmHg",
               "type": "float"
             },
             {
               "name": "heartRate",
-              "description": "Patient's heart rate",
+              "description": "Patient's heart rate (scoring: ≤40=3, 41–50=1, 51–90=0, 91–110=1, 111–130=2, ≥131=3)",
               "unit": "beats/min",
               "type": "float"
             }
@@ -1596,27 +1610,6 @@
       "description": "Monitor growth patterns and physiological functions. Features body surface area calculations, growth percentiles, and metabolic assessments. Essential for developmental tracking and treatment planning.",
       "calculations": [
         {
-          "name": "Body Water Percentage",
-          "description": "Estimates the total body water percentage based on weight and sex.",
-          "formula": "Body Water (%) = (0.6 × Weight for males, 0.5 × Weight for females)",
-          "result_unit": "%",
-          "parameters": [
-            {
-              "name": "weight",
-              "description": "Patient's weight",
-              "unit": "kg",
-              "type": "float"
-            },
-            {
-              "name": "sex",
-              "description": "Patient's biological sex",
-              "unit": "N/A",
-              "type": "string",
-              "options": ["Male", "Female"]
-            }
-          ]
-        },
-        {
           "name": "Bone Mineral Density (BMD)",
           "description": "Calculates bone mineral density to assess bone health.",
           "formula": "BMD (g/cm²) = Bone Mass / Bone Area",
@@ -2384,7 +2377,7 @@
             {
               "name": "saO2",
               "description": "Arterial oxygen saturation",
-              "unit": "%",
+              "unit": "% (expressed as decimal (0-1))",
               "type": "float"
             },
             {

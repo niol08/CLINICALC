@@ -60,8 +60,15 @@ document.addEventListener('DOMContentLoaded', function () {
             form
               .querySelectorAll('input, select, textarea')
               .forEach((input) => {
-                if (input.name && input.value !== '') {
-                  parameters[input.name] = input.value;
+                if (!input.name) return;
+                if (input.type === 'radio') {
+                  if (input.checked) {
+                    parameters[input.name] = input.value;
+                  }
+                } else {
+                  if (input.value !== '') {
+                    parameters[input.name] = input.value;
+                  }
                 }
               });
             const explainBtn = resultDiv.querySelector('.explain-btn');
@@ -111,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
               calcName,
               categoryTitle,
               categorySlug,
-              data.result,
+              roundedResult,
               plainUnit
             );
           } else {

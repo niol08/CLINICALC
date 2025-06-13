@@ -59,3 +59,70 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const counter = document.getElementById('calc-counter');
+  const section = document.getElementById('calc-count-section');
+  let hasAnimated = false;
+
+  if (!counter || !section) return;
+
+  function animateCounter() {
+    let count = 1;
+    const target = 100;
+    const duration = 1500;
+    const stepTime = Math.max(Math.floor(duration / target), 10);
+
+    function updateCounter() {
+      counter.textContent = count;
+      if (count < target) {
+        count++;
+        setTimeout(updateCounter, stepTime);
+      }
+    }
+    updateCounter();
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          animateCounter();
+          hasAnimated = true;
+          obs.unobserve(section);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  observer.observe(section);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const hamburger = document.getElementById('hamburger-btn');
+  const navLinks = document.getElementById('nav-links');
+  const navOverlay = document.getElementById('nav-overlay');
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+    navOverlay.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+
+  if (hamburger && navLinks && navOverlay) {
+    hamburger.addEventListener('click', function () {
+      const isOpen = hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+      navOverlay.classList.toggle('open');
+      document.body.classList.toggle('no-scroll', isOpen);
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    navOverlay.addEventListener('click', closeMenu);
+  }
+});

@@ -7,51 +7,64 @@
 {% endblock %} {% block content %}
 
 <nav class="nav-bar">
-  <ul>
+  <div class="nav-main">
+    <a href="/" class="logo">
+      <img
+        src="{{ url_for('static', filename='images/logo.svg') }}"
+        alt="Home/logo"
+      />
+    </a>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <ul class="nav-links" id="nav-links">
     <li>
-      <a href="/"
-        ><img
-          class="logo"
-          src="{{ url_for('static', filename='images/logo.svg') }}"
-          alt="Home/logo"
-      /></a>
+      <a
+        href="#"
+        data-bs-toggle="modal"
+        data-bs-target="#recentModal"
+        id="recent-link"
+        >Recent</a
+      >
     </li>
-    <div class="nav-links">
-      <ul>
-        <li>
-          <a
-            href=""
-            data-bs-toggle="modal"
-            data-bs-target="#recentModal"
-            id="recent-link"
-            >Recent</a
+    <li><a href="/#Categories">Categories</a></li>
+    <li><a href="/#unit-conversions">Conversions</a></li>
+    <li><a href="/#footer">Contact</a></li>
+    <!-- <li>
+          <button
+            id="toggle-mode"
+            type="button"
+            aria-label="Toggle dark mode"
+            style="
+              background: none;
+              border: none;
+              padding: 0;
+              cursor: pointer;
+            "
           >
-        </li>
-        <li><a href="/#categories">Categories</a></li>
-        <li><a href="/#footer">Contact</a></li>
-        <!-- <li>
-          <a href=""
-            ><img
+            <img
               class="mode"
               src="{{ url_for('static', filename='images/dark.svg') }}"
               alt="mode"
-          /></a>
+            />
+          </button>
         </li> -->
-      </ul>
-    </div>
   </ul>
+  <div id="nav-overlay"></div>
 </nav>
 
 <section id="search-results">
-  <div class="page-header">
-    <h3>Search Results</h3>
+  <div class="page-header" id="search-results-header">
+    <h3 class="search-results-title">Search Results</h3>
   </div>
 
   {% if results %}
-  <div class="calculation-cards grid-container">
+  <div class="result-calculation-cards grid-container">
     {% for calc in results %} {% set calc_index = loop.index %}
     <div
-      class="calculation-card max-width"
+      class="result-calculation-card max-width"
       data-bs-toggle="modal"
       data-bs-target="#calculationModal-{{ calc_index }}"
     >
@@ -206,7 +219,9 @@
   <p>No results found.</p>
   {% endif %}
 
-  <a href="{{ url_for('index') }}" class="back-button">Back to Home</a>
+  <a href="{{ url_for('index') }}" class="back-button back-result"
+    >Back to Home</a
+  >
 </section>
 
 <footer>
