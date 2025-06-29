@@ -9,12 +9,12 @@
           "name": "Dosage by Weight",
           "description": "Calculates the appropriate drug dosage based on a patient's weight.",
           "formula": "Dosage = Dose per kg × Weight (kg)",
-          "result_unit": "varies (mg, mcg, units, etc.)",
+          "result_unit": "mg",
           "parameters": [
             {
               "name": "dosePerKg",
               "description": "Prescribed dose per kilogram of body weight",
-              "unit": "varies (mg/kg, mcg/kg, units/kg, etc.)",
+              "unit": "mg/kg",
               "type": "float"
             },
             {
@@ -120,19 +120,19 @@
             {
               "name": "currentGlucose",
               "description": "Current blood glucose reading",
-              "unit": "mg/dL or mmol/L",
+              "unit": "mg/dL",
               "type": "float"
             },
             {
               "name": "targetGlucose",
               "description": "Target blood glucose level",
-              "unit": "mg/dL or mmol/L",
+              "unit": "mg/dL",
               "type": "float"
             },
             {
               "name": "correctionFactor",
               "description": "How much 1 unit of insulin will lower blood glucose",
-              "unit": "mg/dL/unit or mmol/L/unit",
+              "unit": "mg/dL/unit",
               "type": "float"
             }
           ]
@@ -141,7 +141,7 @@
           "name": "Pediatric Dosage (Young's Rule)",
           "description": "Calculates pediatric drug dose using Young's Rule.",
           "formula": "Pediatric Dose = (Age ÷ (Age + 12)) × Adult Dose",
-          "result_unit": "varies (mg, mL, mcg, etc.)",
+          "result_unit": "mg",
           "parameters": [
             {
               "name": "age",
@@ -152,7 +152,7 @@
             {
               "name": "adultDose",
               "description": "Standard adult dose",
-              "unit": "varies (mg, mL, mcg, etc.)",
+              "unit": "mg",
               "type": "float"
             }
           ]
@@ -161,7 +161,7 @@
           "name": "Pediatric Dosage (Clark's Rule)",
           "description": "Calculates pediatric drug dose using Clark's Rule.",
           "formula": "Pediatric Dose = (Weight (lb) ÷ 150) × Adult Dose",
-          "result_unit": "varies (mg, mL, mcg, etc.)",
+          "result_unit": "mg",
           "parameters": [
             {
               "name": "weight",
@@ -172,7 +172,7 @@
             {
               "name": "adultDose",
               "description": "Standard adult dose",
-              "unit": "varies (mg, mL, mcg, etc.)",
+              "unit": "mg",
               "type": "float"
             }
           ]

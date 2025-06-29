@@ -215,7 +215,7 @@ h3::after {
 .result-calculation-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1em;
+  gap: 2em;
   margin: 2rem 0;
   /* padding: 0 1rem; */
 }
@@ -230,7 +230,7 @@ h3::after {
   transition: all 0.3s ease;
   overflow: hidden;
   position: relative;
-  height: 22em;
+  height: 25em;
   display: flex;
   flex-direction: column;
 }
