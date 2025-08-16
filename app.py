@@ -169,7 +169,6 @@ def search():
     for category in data['categories']:
         for calc in category.get('calculations', []):
             if query in calc['name'].lower() or query in calc.get('description', '').lower():
-                # Add category slug for linking
                 calc_copy = calc.copy()
                 calc_copy['category_slug'] = category.get('slug', '')
                 results.append(calc_copy)
