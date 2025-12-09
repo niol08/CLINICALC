@@ -6,6 +6,8 @@ from livereload import Server
 from calculations.calculations import CALC_REGISTRY
 from dotenv import load_dotenv
 import requests
+from api import bp as api_bp
+from flask_cors import CORS
 
 app = Flask(__name__) 
 
@@ -14,6 +16,10 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 load_dotenv()
 
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+
+CORS(app)
+
+app.register_blueprint(api_bp)
 
 json_path = os.path.join(app.root_path, 'data', 'calculations.json')
 with open(json_path, encoding='utf-8') as f:
