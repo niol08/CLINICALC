@@ -234,7 +234,7 @@ def chat():
     if not GROQ_API_KEY:
         return jsonify({"error": "GROQ_API_KEY not configured"}), 500
 
-    # Build enhanced context - safely handle missing keys like /explain does
+    # Build enhanced context - safely handle missing keys
     recents_info = ""
     if recents:
         recents_lines = []
@@ -263,13 +263,15 @@ def chat():
 
 Guidelines:
 1. Be concise and clinical (2-4 short paragraphs max)
-2. When mentioning a specific calculator, add [CALCULATOR:slug:Name] at the end
-3. Use bullet points for clarity
-4. Reference user's recents/favorites when relevant
-5. End with a helpful follow-up suggestion
+2. Only suggest opening a calculator when specifically relevant to the question
+3. When suggesting a calculator, format it as [CALCULATOR:slug:Name] (use lowercase-with-hyphens for slug)
+4. Use plain text formatting - NO asterisks, NO markdown, NO special formatting
+5. Reference user's recents/favorites when relevant
 6. Respond warmly to greetings (hello, hi, how are you, thanks, etc.) in a friendly but professional manner e.g "Hello! I'm CLINICALC's AI Assistant. How can I assist you with medical calculations today?"
 7. IMPORTANT: Only answer questions related to medical calculations, clinical scores, medical formulas, unit conversions, or healthcare topics
-8. If asked about unrelated topics (politics, sports, entertainment, general knowledge, personal advice, etc.), politely decline with: "I can only assist with medical-related questions and calculations. Is there a clinical calculator or medical formula I can help you with?"
+8. If asked about unrelated topics, politely decline with: "I can only assist with medical-related questions and calculations. Is there a clinical calculator or medical formula I can help you with?"
+9. ALWAYS end your response with exactly 3 follow-up questions in this format:
+[SUGGESTIONS:Question 1?|Question 2?|Question 3?]
 
 Keep responses under 200 words."""
 
@@ -285,7 +287,7 @@ Keep responses under 200 words."""
             {"role": "user", "content": user_message}
         ],
         "temperature": 0.7,
-        "max_tokens": 300,
+        "max_tokens": 350,
         "top_p": 0.9
     }
 
