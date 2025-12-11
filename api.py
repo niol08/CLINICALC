@@ -1,7 +1,8 @@
 # api_basic.py
 import json
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 import os
+from calculations import CALC_REGISTRY
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -30,3 +31,79 @@ def metadata():
         "version": load_version(),
         "data": data
     })
+    
+
+@bp.route("/compute", methods=["POST"])
+def compute():
+    """
+    Expected JSON:
+    {
+        "slug": "dosage-by-weight",
+        "params": { "dosePerKg": 5, "weight": 70 }
+    }
+    """
+
+    payload = request.json or {}
+    slug = payload.get("slug")
+    params = payload.get("params", {})
+
+    if not slug:
+        return jsonify({"error": "slug is required"}), 400
+
+    data = load_metadata()
+    calculation = None
+
+    for cat in data.get("categories", []):
+        for calc in cat.get("calculations", []):
+            if calc.get("slug") == slug:
+                calculation = calc
+                break
+        if calculation:
+            break
+
+    if not calculation:
+        return jsonify({"error": f"calculation '{slug}' not found"}), 404
+
+    calc_name = calculation["name"]
+
+    func = CALC_REGISTRY.get(calc_name)
+    if not func:
+        return jsonify({"error": f"no backend implementation for '{calc_name}'"}), 500
+
+    try:
+        ordered_args = []
+        for p in calculation.get("parameters", []):
+            pname = p["name"]
+
+            if pname not in params:
+                return jsonify({"error": f"missing parameter: {pname}"}), 400
+
+            value = params[pname]
+
+            if p["type"] == "float":
+                value = float(value)
+            elif p["type"] == "integer":
+                value = int(value)
+            elif p["type"] == "string":
+                value = str(value)
+
+            if p.get("enum") and value not in p["enum"]:
+                return jsonify({"error": f"invalid value for {pname}. Allowed: {p['enum']}"}), 400
+
+            ordered_args.append(value)
+
+    except Exception as e:
+        return jsonify({"error": f"parameter processing error: {str(e)}"}), 400
+
+    try:
+        result = func(*ordered_args)
+    except Exception as e:
+        return jsonify({"error": "calculation execution error", "details": str(e)}), 500
+
+    return jsonify({
+        "slug": slug,
+        "name": calc_name,
+        "result": result,
+        "unit": calculation.get("result_unit")
+    })
+
