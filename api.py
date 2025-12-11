@@ -211,3 +211,96 @@ Please provide your explanation now:"""
     except Exception as e:
         print("Groq error:", e)
         return jsonify({"error": "Sorry, could not get explanation.", "details": str(e)}), 500
+@bp.route("/chat", methods=["POST"])
+def chat():
+    """
+    Expected JSON:
+    {
+        "message": "What is BMI?",
+        "context": "System context with recents and favorites",
+        "recents": [...],
+        "favorites": [...]
+    }
+    """
+    req_data = request.json or {}
+    user_message = req_data.get('message', '')
+    system_context = req_data.get('context', '')
+    recents = req_data.get('recents', [])
+    favorites = req_data.get('favorites', [])
+
+    if not user_message:
+        return jsonify({"error": "message is required"}), 400
+
+    if not GROQ_API_KEY:
+        return jsonify({"error": "GROQ_API_KEY not configured"}), 500
+
+    # Build enhanced context
+    recents_info = ""
+    if recents:
+        recents_info = "\n\nRecent Calculations:\n" + "\n".join(
+            f"- {r['calculationName']}: {r['result']} {r['unit']}"
+            for r in recents[:5]
+        )
+
+    favorites_info = ""
+    if favorites:
+        favorites_info = "\n\nFavorite Calculators:\n" + "\n".join(
+            f"- {f['calculationName']}"
+            for f in favorites
+        )
+
+    system_prompt = f"""You are ClinicalC AI Assistant, helping healthcare professionals with medical calculations.
+
+{system_context}
+{recents_info}
+{favorites_info}
+
+Guidelines:
+1. Be concise and clinical (2-4 short paragraphs max)
+2. When mentioning a specific calculator, add [CALCULATOR:slug:Name] at the end
+3. Use bullet points for clarity
+4. Reference user's recents/favorites when relevant
+5. End with a helpful follow-up suggestion
+6. Respond warmly to greetings (hello, hi, how are you, thanks, etc.) in a friendly but professional manner e.g "Hello! I'm CLINICALC's AI Assistant. How can I assist you with medical calculations today?"
+7. IMPORTANT: Only answer questions related to medical calculations, clinical scores, medical formulas, unit conversions, or healthcare topics
+8. If asked about unrelated topics (politics, sports, entertainment, general knowledge, personal advice, etc.), politely decline with: "I can only assist with medical-related questions and calculations. Is there a clinical calculator or medical formula I can help you with?"
+
+Keep responses under 200 words."""
+
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 300,
+        "top_p": 0.9
+    }
+
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        print("Groq chat response:", response.status_code)
+        
+        if response.ok:
+            ai_response = response.json()['choices'][0]['message']['content']
+            return jsonify({"response": ai_response})
+        else:
+            return jsonify({
+                "error": "Failed to get AI response",
+                "details": response.text
+            }), 500
+            
+    except requests.Timeout:
+        return jsonify({"error": "AI request timed out"}), 504
+    except Exception as e:
+        print("Groq chat error:", e)
+        return jsonify({
+            "error": "Could not process chat request",
+            "details": str(e)
+        }), 500
