@@ -234,20 +234,26 @@ def chat():
     if not GROQ_API_KEY:
         return jsonify({"error": "GROQ_API_KEY not configured"}), 500
 
-    # Build enhanced context
+    # Build enhanced context - safely handle missing keys like /explain does
     recents_info = ""
     if recents:
-        recents_info = "\n\nRecent Calculations:\n" + "\n".join(
-            f"- {r['calculationName']}: {r['result']} {r['unit']}"
-            for r in recents[:5]
-        )
+        recents_lines = []
+        for r in recents[:5]:
+            name = r.get('calculationName', 'Unknown Calculation')
+            result = r.get('result', 'N/A')
+            unit = r.get('unit', '')
+            recents_lines.append(f"- {name}: {result} {unit}")
+        if recents_lines:
+            recents_info = "\n\nRecent Calculations:\n" + "\n".join(recents_lines)
 
     favorites_info = ""
     if favorites:
-        favorites_info = "\n\nFavorite Calculators:\n" + "\n".join(
-            f"- {f['calculationName']}"
-            for f in favorites
-        )
+        favorites_lines = []
+        for f in favorites:
+            name = f.get('calculationName', 'Unknown Calculator')
+            favorites_lines.append(f"- {name}")
+        if favorites_lines:
+            favorites_info = "\n\nFavorite Calculators:\n" + "\n".join(favorites_lines)
 
     system_prompt = f"""You are ClinicalC AI Assistant, helping healthcare professionals with medical calculations.
 
