@@ -42,6 +42,83 @@ def execute_function(function_name, parameters):
         return str(e)
 
 
+# @app.route('/explain', methods=['POST'])
+# def explain():
+#     req_data = request.get_json()
+#     calc_name = req_data.get('calc_name')
+#     result = req_data.get('result')
+#     parameters = req_data.get('parameters', {})
+#     additional_context = req_data.get('additional_context', '')
+
+  
+#     def extract_param(keys):
+#         for key in keys:
+#             for param_key in parameters:
+#                 if param_key.lower() == key:
+#                     return parameters[param_key]
+#         return ''
+
+#     age = extract_param(['age'])
+#     sex = extract_param(['sex'])
+#     race = extract_param(['race'])
+
+   
+#     for key in list(parameters.keys()):
+#         if key.lower() in ['age', 'sex', 'race']:
+#             parameters.pop(key)
+
+#     age_str = f"\nPatient Age: {age}" if age else ""
+#     sex_str = f"\nPatient Sex: {sex}" if sex else ""
+#     race_str = f"\nPatient Race: {race}" if race else ""
+#     context_str = f"\nAdditional Context: {additional_context}" if additional_context else ""
+
+#     unit = ""
+#     for category in data['categories']:
+#         for calc in category.get('calculations', []):
+#             if calc['name'] == calc_name:
+#                 unit = calc.get('result_unit', '') or ''
+#                 break
+    
+#     param_str = ""
+#     if parameters:
+#         param_str = "\nCalculation Parameters:\n" + "\n".join(
+#             f"- {k}: {v}" for k, v in parameters.items()
+#         )
+        
+    
+
+#     prompt = f"""You are a senior clinical nursing assistant AI. When I provide you a lab value or a medical calculation result, you will:
+#   1) State whether the result is within the normal reference range (or above/below),
+#   2) Explain what an abnormal value could imply about the patient’s condition,
+#   3) List any potential nursing concerns or next steps.
+#   4) Use plain language—suitable for a registered nurse (RN),
+#   5) Keep your answer to 3–5 bullet points.
+
+# Calculation Name: {calc_name}
+# Result Value: {result} {unit}
+# Unit: {unit}
+# {age_str}{sex_str}{race_str}{context_str}
+# {param_str}
+
+# Please provide your explanation now:"""
+    
+
+#     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
+#     payload = {
+#         "contents": [{"parts": [{"text": prompt}]}]
+#     }
+#     try:
+#         response = requests.post(url, json=payload)
+#         print("Gemini response:", response.status_code, response.text)
+#         explanation = "Sorry, could not get explanation."
+#         if response.ok:
+#             explanation = response.json()['candidates'][0]['content']['parts'][0]['text']
+#         return jsonify({"explanation": explanation})
+#     except Exception as e:
+#         print("Gemini error:", e)
+#         return jsonify({"explanation": "Sorry, could not get explanation."})
+
+
 @app.route('/explain', methods=['POST'])
 def explain():
     req_data = request.get_json()
@@ -89,7 +166,7 @@ def explain():
 
     prompt = f"""You are a senior clinical nursing assistant AI. When I provide you a lab value or a medical calculation result, you will:
   1) State whether the result is within the normal reference range (or above/below),
-  2) Explain what an abnormal value could imply about the patient’s condition,
+  2) Explain what an abnormal value could imply about the patient's condition,
   3) List any potential nursing concerns or next steps.
   4) Use plain language—suitable for a registered nurse (RN),
   5) Keep your answer to 3–5 bullet points.
@@ -102,22 +179,35 @@ Unit: {unit}
 
 Please provide your explanation now:"""
     
+    # Change to OpenAI
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    if not OPENAI_API_KEY:
+        return jsonify({"explanation": "OpenAI API key not configured."})
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}]
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json"
     }
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": "You are a senior clinical nursing assistant AI."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.7
+    }
+    
     try:
-        response = requests.post(url, json=payload)
-        print("Gemini response:", response.status_code, response.text)
+        response = requests.post(url, json=payload, headers=headers)
+        print("OpenAI response:", response.status_code, response.text)
         explanation = "Sorry, could not get explanation."
         if response.ok:
-            explanation = response.json()['candidates'][0]['content']['parts'][0]['text']
+            explanation = response.json()['choices'][0]['message']['content']
         return jsonify({"explanation": explanation})
     except Exception as e:
-        print("Gemini error:", e)
+        print("OpenAI error:", e)
         return jsonify({"explanation": "Sorry, could not get explanation."})
-
 
 @app.route('/')
 def index():
