@@ -2,12 +2,18 @@
 import json
 from flask import Blueprint, jsonify, request
 import os
+from dotenv import load_dotenv
+import requests
 from calculations.calculations import CALC_REGISTRY
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
 DATA_PATH = "data/calculations.json"
 VERSION_PATH = "data/metadata_version.txt"
+
+load_dotenv()
+
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 
 def load_metadata():
     with open(DATA_PATH, "r", encoding="utf-8") as f:
@@ -44,7 +50,7 @@ def compute():
     """
 
     payload = request.json or {}
-    name = payload.get("name")  # Changed from slug to name
+    name = payload.get("name")  
     params = payload.get("params", {})
 
     if not name:
@@ -106,3 +112,93 @@ def compute():
         "unit": calculation.get("result_unit")
     })
 
+@bp.route("/explain", methods=["POST"])
+def explain():
+    """
+    Expected JSON:
+    {
+        "calc_name": "Body Mass Index (BMI)",
+        "result": 24.5,
+        "parameters": { "weight": 80, "height": 1.85, "age": 35, "sex": "male" },
+        "additional_context": "Patient has diabetes"
+    }
+    """
+    req_data = request.json or {}
+    calc_name = req_data.get('calc_name')
+    result = req_data.get('result')
+    parameters = req_data.get('parameters', {})
+    additional_context = req_data.get('additional_context', '')
+
+    if not calc_name or result is None:
+        return jsonify({"error": "calc_name and result are required"}), 400
+
+    def extract_param(keys):
+        for key in keys:
+            for param_key in parameters:
+                if param_key.lower() == key:
+                    return parameters[param_key]
+        return ''
+
+    age = extract_param(['age'])
+    sex = extract_param(['sex', 'gender'])
+    race = extract_param(['race', 'ethnicity'])
+
+    for key in list(parameters.keys()):
+        if key.lower() in ['age', 'sex', 'gender', 'race', 'ethnicity']:
+            parameters.pop(key)
+
+    age_str = f"\nPatient Age: {age}" if age else ""
+    sex_str = f"\nPatient Sex: {sex}" if sex else ""
+    race_str = f"\nPatient Race: {race}" if race else ""
+    context_str = f"\nAdditional Context: {additional_context}" if additional_context else ""
+
+    data = load_metadata()
+    unit = ""
+    for category in data['categories']:
+        for calc in category.get('calculations', []):
+            if calc['name'] == calc_name:
+                unit = calc.get('result_unit', '') or ''
+                break
+    
+    param_str = ""
+    if parameters:
+        param_str = "\nCalculation Parameters:\n" + "\n".join(
+            f"- {k}: {v}" for k, v in parameters.items()
+        )
+
+    prompt = f"""You are a senior clinical nursing assistant AI. When I provide you a lab value or a medical calculation result, you will:
+  1) State whether the result is within the normal reference range (or above/below),
+  2) Explain what an abnormal value could imply about the patient's condition,
+  3) List any potential nursing concerns or next steps.
+  4) Use plain language—suitable for a registered nurse (RN),
+  5) Keep your answer to 3–5 bullet points.
+
+Calculation Name: {calc_name}
+Result Value: {result} {unit}
+Unit: {unit}
+{age_str}{sex_str}{race_str}{context_str}
+{param_str}
+
+Please provide your explanation now:"""
+    
+    if not GEMINI_API_KEY:
+        return jsonify({"error": "GEMINI_API_KEY not configured"}), 500
+
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}]
+    }
+    
+    try:
+        response = requests.post(url, json=payload)
+        print("Gemini response:", response.status_code, response.text)
+        
+        if response.ok:
+            explanation = response.json()['candidates'][0]['content']['parts'][0]['text']
+            return jsonify({"explanation": explanation})
+        else:
+            return jsonify({"error": "Failed to get explanation from AI", "details": response.text}), 500
+            
+    except Exception as e:
+        print("Gemini error:", e)
+        return jsonify({"error": "Sorry, could not get explanation.", "details": str(e)}), 500
