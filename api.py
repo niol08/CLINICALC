@@ -38,31 +38,31 @@ def compute():
     """
     Expected JSON:
     {
-        "slug": "dosage-by-weight",
-        "params": { "dosePerKg": 5, "weight": 70 }
+        "name": "Body Mass Index (BMI)",
+        "params": { "weight": 80, "height": 1.85 }
     }
     """
 
     payload = request.json or {}
-    slug = payload.get("slug")
+    name = payload.get("name")  # Changed from slug to name
     params = payload.get("params", {})
 
-    if not slug:
-        return jsonify({"error": "slug is required"}), 400
+    if not name:
+        return jsonify({"error": "name is required"}), 400
 
     data = load_metadata()
     calculation = None
 
     for cat in data.get("categories", []):
         for calc in cat.get("calculations", []):
-            if calc.get("slug") == slug:
+            if calc.get("name") == name:  # Match by name instead of slug
                 calculation = calc
                 break
         if calculation:
             break
 
     if not calculation:
-        return jsonify({"error": f"calculation '{slug}' not found"}), 404
+        return jsonify({"error": f"calculation '{name}' not found"}), 404
 
     calc_name = calculation["name"]
 
@@ -101,7 +101,6 @@ def compute():
         return jsonify({"error": "calculation execution error", "details": str(e)}), 500
 
     return jsonify({
-        "slug": slug,
         "name": calc_name,
         "result": result,
         "unit": calculation.get("result_unit")
