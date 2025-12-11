@@ -1,8 +1,8 @@
-# api_basic.py
+
 import json
 from flask import Blueprint, jsonify, request
 import os
-from calculations import CALC_REGISTRY
+from calculations.calculations import CALC_REGISTRY
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
