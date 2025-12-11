@@ -1,4 +1,3 @@
-
 import json
 from flask import Blueprint, jsonify, request
 import os
@@ -13,7 +12,7 @@ VERSION_PATH = "data/metadata_version.txt"
 
 load_dotenv()
 
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 
 def load_metadata():
     with open(DATA_PATH, "r", encoding="utf-8") as f:
@@ -181,24 +180,34 @@ Unit: {unit}
 
 Please provide your explanation now:"""
     
-    if not GEMINI_API_KEY:
-        return jsonify({"error": "GEMINI_API_KEY not configured"}), 500
+    if not GROQ_API_KEY:
+        return jsonify({"error": "GROQ_API_KEY not configured"}), 500
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json"
+    }
     payload = {
-        "contents": [{"parts": [{"text": prompt}]}]
+        "model": "llama-3.3-70b-versatile",
+        "messages": [
+            {"role": "system", "content": "You are a senior clinical nursing assistant AI."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.7,
+        "max_tokens": 1024
     }
     
     try:
-        response = requests.post(url, json=payload)
-        print("Gemini response:", response.status_code, response.text)
+        response = requests.post(url, json=payload, headers=headers)
+        print("Groq response:", response.status_code, response.text)
         
         if response.ok:
-            explanation = response.json()['candidates'][0]['content']['parts'][0]['text']
+            explanation = response.json()['choices'][0]['message']['content']
             return jsonify({"explanation": explanation})
         else:
             return jsonify({"error": "Failed to get explanation from AI", "details": response.text}), 500
             
     except Exception as e:
-        print("Gemini error:", e)
+        print("Groq error:", e)
         return jsonify({"error": "Sorry, could not get explanation.", "details": str(e)}), 500
