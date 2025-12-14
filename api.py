@@ -2,7 +2,7 @@ import json
 from flask import Blueprint, jsonify, request
 import os
 from dotenv import load_dotenv
-import requests
+from google import genai
 from calculations.calculations import CALC_REGISTRY
 
 bp = Blueprint("api", __name__, url_prefix="/api")
@@ -12,7 +12,7 @@ VERSION_PATH = "data/metadata_version.txt"
 
 load_dotenv()
 
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 
 def load_metadata():
     with open(DATA_PATH, "r", encoding="utf-8") as f:
@@ -60,7 +60,7 @@ def compute():
 
     for cat in data.get("categories", []):
         for calc in cat.get("calculations", []):
-            if calc.get("name") == name:  # Match by name instead of slug
+            if calc.get("name") == name:  
                 calculation = calc
                 break
         if calculation:
@@ -180,37 +180,23 @@ Unit: {unit}
 
 Please provide your explanation now:"""
     
-    if not GROQ_API_KEY:
-        return jsonify({"error": "GROQ_API_KEY not configured"}), 500
+    if not GEMINI_API_KEY:
+        return jsonify({"error": "GEMINI_API_KEY not configured"}), 500
 
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": "You are a senior clinical nursing assistant AI."},
-            {"role": "user", "content": prompt}
-        ],
-        "temperature": 0.7,
-        "max_tokens": 1024
-    }
-    
     try:
-        response = requests.post(url, json=payload, headers=headers)
-        print("Groq response:", response.status_code, response.text)
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
         
-        if response.ok:
-            explanation = response.json()['choices'][0]['message']['content']
-            return jsonify({"explanation": explanation})
-        else:
-            return jsonify({"error": "Failed to get explanation from AI", "details": response.text}), 500
+        return jsonify({"explanation": response.text})
             
     except Exception as e:
-        print("Groq error:", e)
+        print("Gemini error:", e)
         return jsonify({"error": "Sorry, could not get explanation.", "details": str(e)}), 500
+
+
 @bp.route("/chat", methods=["POST"])
 def chat():
     """
@@ -231,10 +217,9 @@ def chat():
     if not user_message:
         return jsonify({"error": "message is required"}), 400
 
-    if not GROQ_API_KEY:
-        return jsonify({"error": "GROQ_API_KEY not configured"}), 500
+    if not GEMINI_API_KEY:
+        return jsonify({"error": "GEMINI_API_KEY not configured"}), 500
 
-    # Build enhanced context - safely handle missing keys
     recents_info = ""
     if recents:
         recents_lines = []
@@ -282,39 +267,19 @@ Example response:
 
 Keep responses under 200 words. NEVER forget the [SUGGESTIONS:...] line."""
 
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message}
-        ],
-        "temperature": 0.7,
-        "max_tokens": 350,
-        "top_p": 0.9
-    }
+    full_prompt = f"{system_prompt}\n\nUser: {user_message}\n\nAssistant:"
 
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
-        print("Groq chat response:", response.status_code)
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=full_prompt
+        )
         
-        if response.ok:
-            ai_response = response.json()['choices'][0]['message']['content']
-            return jsonify({"response": ai_response})
-        else:
-            return jsonify({
-                "error": "Failed to get AI response",
-                "details": response.text
-            }), 500
+        return jsonify({"response": response.text})
             
-    except requests.Timeout:
-        return jsonify({"error": "AI request timed out"}), 504
     except Exception as e:
-        print("Groq chat error:", e)
+        print("Gemini chat error:", e)
         return jsonify({
             "error": "Could not process chat request",
             "details": str(e)
