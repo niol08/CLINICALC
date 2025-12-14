@@ -306,38 +306,6 @@
               "type": "float"
             }
           ]
-        },
-        {
-          "name": "Anion Gap",
-          "description": "Calculates the anion gap to assess acid-base balance.",
-          "formula": "Anion Gap = (Na+ + K+) - (Cl- + HCO3-)",
-          "result_unit": "mEq/L",
-          "parameters": [
-            {
-              "name": "sodium",
-              "description": "Sodium level",
-              "unit": "mEq/L",
-              "type": "float"
-            },
-            {
-              "name": "potassium",
-              "description": "Potassium level",
-              "unit": "mEq/L",
-              "type": "float"
-            },
-            {
-              "name": "chloride",
-              "description": "Chloride level",
-              "unit": "mEq/L",
-              "type": "float"
-            },
-            {
-              "name": "bicarbonate",
-              "description": "Bicarbonate level",
-              "unit": "mEq/L",
-              "type": "float"
-            }
-          ]
         }
       ]
     },
@@ -473,26 +441,7 @@
             }
           ]
         },
-        {
-          "name": "Mean Arterial Pressure (MAP)",
-          "description": "Calculates mean arterial pressure to assess perfusion.",
-          "formula": "MAP = [(2 × Diastolic) + Systolic] / 3",
-          "result_unit": "mmHg",
-          "parameters": [
-            {
-              "name": "systolic",
-              "description": "Systolic blood pressure",
-              "unit": "mmHg",
-              "type": "float"
-            },
-            {
-              "name": "diastolic",
-              "description": "Diastolic blood pressure",
-              "unit": "mmHg",
-              "type": "float"
-            }
-          ]
-        },
+
         {
           "name": "Oxygenation Index (OI)",
           "description": "Calculates the oxygenation index to assess the severity of hypoxemia.",
@@ -1456,26 +1405,7 @@
             }
           ]
         },
-        {
-          "name": "Pulse Pressure",
-          "description": "Calculates the pulse pressure to assess cardiovascular health.",
-          "formula": "Pulse Pressure = Systolic Blood Pressure - Diastolic Blood Pressure",
-          "result_unit": "mmHg",
-          "parameters": [
-            {
-              "name": "systolicBP",
-              "description": "Systolic blood pressure",
-              "unit": "mmHg",
-              "type": "float"
-            },
-            {
-              "name": "diastolicBP",
-              "description": "Diastolic blood pressure",
-              "unit": "mmHg",
-              "type": "float"
-            }
-          ]
-        },
+
         {
           "name": "Ejection Fraction",
           "description": "Calculates the ejection fraction to assess heart function.",

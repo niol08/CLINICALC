@@ -136,13 +136,6 @@ def oxygen_flow_rate(fiO2: float, minuteVentilation: float) -> float:
     return pure_O2_fraction * minuteVentilation
 
 
-@register_calc("Anion Gap")
-def anion_gap(sodium: float, potassium: float, chloride: float, bicarbonate: float) -> float:
-    """
-    Calculates the anion gap to assess acid-base balance.
-    Formula: Anion Gap = (Na+ + K+) - (Cl- + HCO3-)
-    """
-    return (sodium + potassium) - (chloride + bicarbonate)
 
 ## End of Medical dosage and Administration calculations ##
 
@@ -258,22 +251,8 @@ def glasgow_coma_scale(eyeResponse: int, verbalResponse: int, motorResponse: int
     return eyeResponse + verbalResponse + motorResponse
 
 
-@register_calc("Pulse Pressure")
-def pulse_pressure(systolicBP: float, diastolicBP: float) -> float:
-    """
-    Calculates the pulse pressure to assess cardiovascular health.
-    Formula: Pulse Pressure = Systolic Blood Pressure - Diastolic Blood Pressure
-    """
-    return systolicBP - diastolicBP
 
 
-@register_calc("Mean Arterial Pressure (MAP)")
-def mean_arterial_pressure(systolic: float, diastolic: float) -> float:
-    """
-    Calculates mean arterial pressure to assess perfusion.
-    Formula: MAP = [(2 × Diastolic) + Systolic] / 3
-    """
-    return ((2 * diastolic) + systolic) / 3
 
 
 @register_calc("Oxygenation Index (OI)")
