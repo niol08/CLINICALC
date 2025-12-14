@@ -7,6 +7,7 @@ from calculations.calculations import CALC_REGISTRY
 from dotenv import load_dotenv
 import requests
 from api import bp as api_bp
+from google import genai
 from flask_cors import CORS
 
 app = Flask(__name__) 
@@ -179,17 +180,16 @@ Unit: {unit}
 Please provide your explanation now:"""
     
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}]
-    }
+    if not GEMINI_API_KEY:
+        return jsonify({"explanation": "Gemini API key not configured."})
     try:
-        response = requests.post(url, json=payload)
-        print("Gemini response:", response.status_code, response.text)
-        explanation = "Sorry, could not get explanation."
-        if response.ok:
-            explanation = response.json()['candidates'][0]['content']['parts'][0]['text']
-        return jsonify({"explanation": explanation})
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        print("Gemini response:", response.text)
+        return jsonify({"explanation": response.text})
     except Exception as e:
         print("Gemini error:", e)
         return jsonify({"explanation": "Sorry, could not get explanation."})
