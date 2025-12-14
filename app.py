@@ -42,6 +42,82 @@ def execute_function(function_name, parameters):
         return str(e)
 
 
+@app.route('/')
+def index():
+    cards = data['categories']
+    return render_template('index.html', cards=cards)
+
+   
+@app.route('/card/<slug>', methods=['GET', 'POST'])
+def card_detail(slug):
+    for category in data['categories']:
+        if category.get('slug', '') == slug:
+      
+            if request.method == 'POST':
+                calculation_name = request.form['calculation_name']
+                calculation = next((calc for calc in category.get('calculations', []) if calc['name'] == calculation_name), None)
+                if calculation:
+                    func = CALC_REGISTRY.get(calculation_name)
+                    if not func:
+                        return jsonify(result=None, error="Calculation not implemented.")
+                    kwargs = {}
+                    for param in calculation['parameters']:
+                        param_name = param['name']
+                        value = request.form.get(param_name)
+                        if value is None or value == '':
+                            return jsonify(result=None, error=f"Missing value for {param_name}")
+                        if param.get('type') == 'float':
+                            try:
+                                value = float(value)
+                            except Exception:
+                                return jsonify(result=None, error=f"Invalid float for {param_name}")
+                        elif param.get('type') == 'integer':
+                            try:
+                                value = int(value)
+                            except Exception:
+                                return jsonify(result=None, error=f"Invalid integer for {param_name}")
+                        elif param.get('type') == 'boolean':
+                            value = value.lower() in ['true', '1', 'yes', 'on']
+                        kwargs[param_name] = value
+                    try:
+                        print("Calling:", func, "with", kwargs)
+                        result = func(**kwargs)
+                        return jsonify(result=result, unit=calculation.get('result_unit', ''))
+                    except Exception as e:
+                        return jsonify(result=None, error=str(e))
+                return jsonify(result=None, error="Calculation not found.")
+           
+            return render_template('card_detail.html', category=category)
+    return "Category not found", 404
+
+
+@app.route('/search')
+def search():
+    query = request.args.get('query', '').lower()
+    results = []
+    for category in data['categories']:
+        for calc in category.get('calculations', []):
+            if query in calc['name'].lower() or query in calc.get('description', '').lower():
+                calc_copy = calc.copy()
+                calc_copy['category_slug'] = category.get('slug', '')
+                results.append(calc_copy)
+    return render_template('search_results.html', query=query, results=results)
+
+@app.route('/search_api')
+def search_api():
+    query = request.args.get('query', '').lower()
+    results = []
+    for category in data['categories']:
+        category_slug = category.get('slug', '')
+        for calc in category.get('calculations', []):
+            if query in calc['name'].lower() or query in calc.get('description', '').lower():
+                results.append({
+                    'name': calc['name'],
+                    'description': calc.get('description', ''),
+                    'category_slug': category_slug
+                })
+    return jsonify(results)
+
 @app.route('/explain', methods=['POST'])
 def explain():
     req_data = request.get_json()
@@ -208,82 +284,6 @@ Please provide your explanation now:"""
 #     except Exception as e:
 #         print("Groq error:", e)
 #         return jsonify({"explanation": "Sorry, could not get explanation."})
-
-# @app.route('/')
-# def index():
-#     cards = data['categories']
-#     return render_template('index.html', cards=cards)
-
-   
-@app.route('/card/<slug>', methods=['GET', 'POST'])
-def card_detail(slug):
-    for category in data['categories']:
-        if category.get('slug', '') == slug:
-      
-            if request.method == 'POST':
-                calculation_name = request.form['calculation_name']
-                calculation = next((calc for calc in category.get('calculations', []) if calc['name'] == calculation_name), None)
-                if calculation:
-                    func = CALC_REGISTRY.get(calculation_name)
-                    if not func:
-                        return jsonify(result=None, error="Calculation not implemented.")
-                    kwargs = {}
-                    for param in calculation['parameters']:
-                        param_name = param['name']
-                        value = request.form.get(param_name)
-                        if value is None or value == '':
-                            return jsonify(result=None, error=f"Missing value for {param_name}")
-                        if param.get('type') == 'float':
-                            try:
-                                value = float(value)
-                            except Exception:
-                                return jsonify(result=None, error=f"Invalid float for {param_name}")
-                        elif param.get('type') == 'integer':
-                            try:
-                                value = int(value)
-                            except Exception:
-                                return jsonify(result=None, error=f"Invalid integer for {param_name}")
-                        elif param.get('type') == 'boolean':
-                            value = value.lower() in ['true', '1', 'yes', 'on']
-                        kwargs[param_name] = value
-                    try:
-                        print("Calling:", func, "with", kwargs)
-                        result = func(**kwargs)
-                        return jsonify(result=result, unit=calculation.get('result_unit', ''))
-                    except Exception as e:
-                        return jsonify(result=None, error=str(e))
-                return jsonify(result=None, error="Calculation not found.")
-           
-            return render_template('card_detail.html', category=category)
-    return "Category not found", 404
-
-
-@app.route('/search')
-def search():
-    query = request.args.get('query', '').lower()
-    results = []
-    for category in data['categories']:
-        for calc in category.get('calculations', []):
-            if query in calc['name'].lower() or query in calc.get('description', '').lower():
-                calc_copy = calc.copy()
-                calc_copy['category_slug'] = category.get('slug', '')
-                results.append(calc_copy)
-    return render_template('search_results.html', query=query, results=results)
-
-@app.route('/search_api')
-def search_api():
-    query = request.args.get('query', '').lower()
-    results = []
-    for category in data['categories']:
-        category_slug = category.get('slug', '')
-        for calc in category.get('calculations', []):
-            if query in calc['name'].lower() or query in calc.get('description', '').lower():
-                results.append({
-                    'name': calc['name'],
-                    'description': calc.get('description', ''),
-                    'category_slug': category_slug
-                })
-    return jsonify(results)
 
 if __name__ == '__main__':
     server = Server(app.wsgi_app)
